@@ -22,6 +22,8 @@ class App extends React.Component {
         return (
             <View>
                 <Text>Palisade App</Text>
+
+                <text>  blank_blank </text>
             </View>
         )
     }
