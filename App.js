@@ -15,14 +15,12 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
-
+import TestCounter from "./src/screens/testCounter";
 
 class App extends React.Component {
     render() {
         return (
-            <View>
-                <Text>Palisade App</Text>
-            </View>
+            <TestCounter />
         )
     }
 }
