@@ -23,7 +23,8 @@ class App extends React.Component {
             <View>
                 <Text>Palisade App</Text>
 
-                <text>  blank_blank </text>
+                <Text>  blank_blank </Text>
+                <Text> hi da dash</Text>
             </View>
         )
     }
