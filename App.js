@@ -21,7 +21,7 @@ class App extends React.Component {
     render() {
         return (
             <View>
-                <Text>Base App</Text>
+                <Text>Palisade App</Text>
             </View>
         )
     }
