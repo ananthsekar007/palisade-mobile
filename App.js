@@ -22,6 +22,7 @@ class App extends React.Component {
         return (
             <View>
                 <Text>Palisade App</Text>
+                <Text> hi da dash</Text>
             </View>
         )
     }
