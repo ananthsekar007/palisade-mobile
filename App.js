@@ -15,7 +15,7 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
-import Login from './src/screens/Auth/Login'
+import Login from "./src/screens/Auth/login"
 
 class App extends React.Component {
     render() {

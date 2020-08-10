@@ -1,87 +1,105 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import {TextInput} from 'react-native-paper';
+import {StyleSheet, Text, View, StatusBar, TouchableOpacity} from 'react-native';
+import {TextInput, Button} from 'react-native-paper';
 
 export default class App extends React.Component {
-  render(){
-      state = {
-          email: "",
-          password: ""
-      }
+  render() {
+    state = {
+      email: '',
+      password: '',
+    };
     return (
-        <View style={styles.container}>
-        <Text style={styles.logo}>Palisade</Text>
-        <View style={styles.inputView} >
-          <TextInput  
-            style={styles.inputText}
-            mode="outlined"
-            label="Email"
-            onChangeText={text => this.setState({email:text})}/>
+      <View style={styles.background}>
+        <StatusBar
+          backgroundColor={'#F1F1F1'}
+          barStyle={('default', 'dark-content')}
+        />
+        <Text style={styles.headerText}>Palisade</Text>
+        <View style={styles.textContainer}>
+          <TextInput
+            style={styles.textView}
+            theme={{
+              colors: {
+                primary: '#1C7CC2',
+                underlineColor: 'transparent',
+              },
+            }}
+            mode={'outlined'}
+            label={'Email'}
+            autoFocus={true}
+            sel={'#1C7CC2'}
+            keyboardType={'default'}
+            onChangeText={(email) => this.setState({email})}
+          />
+          <TextInput
+            mode={'outlined'}
+            theme={{
+              colors: {
+                primary: '#1C7CC2',
+                underlineColor: 'transparent',
+              },
+            }}
+            label={'Password'}
+            secureTextEntry={true}
+            keyboardType={'default'}
+            onChangeText={(password) => this.setState({password})}
+          />
         </View>
-        <View style={styles.inputView} >
-          <TextInput  
-            secureTextEntry
-            mode = "outlined"
-            style={styles.inputText}
-            label = "Password"
-            onChangeText={text => this.setState({password:text})}/>
-        </View>
+        <Button style={styles.loginButton} mode="contained" color={'#1C7CC2'}>
+          Login
+        </Button>
         <TouchableOpacity>
-          <Text style={styles.forgot}>Forgot Password?</Text>
+            <Text style={styles.registerText}>Don't have an account?</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.loginBtn}>
-          <Text style={styles.loginText}>LOGIN</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={styles.loginText}>Signup</Text>
-        </TouchableOpacity>
-
-  
+        <Button
+          style={styles.registerButton}
+          mode="contained"
+          color={'#003C69'}>
+          Register
+        </Button>
       </View>
-        
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  headerText :{
+    textAlign: "center",
+    marginTop: 100,
+    fontSize: 30,
+    fontWeight: "bold",
+    fontFamily: "AlfaSlabOne-Regular",
+    marginBottom: 80
+  },
+  background: {
+    backgroundColor: '#F1F1F1',
     flex: 1,
-    backgroundColor: '#87cefa',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
-  logo:{
-    fontWeight:"bold",
-    fontSize:50,
-    color:"#ffff",
-    marginBottom:40
+  textContainer: {
+    marginTop: 0,
+    margin: 30,
   },
-  inputView:{
-    width:"80%",
-    backgroundColor:"#ffff",
-    borderRadius:25,
-    height:50,
-    marginBottom:20,
-    justifyContent:"center",
-    padding:20
+  textView: {
+    marginBottom: 20,
   },
-  inputText:{
+  loginButton: {
+    marginLeft: 70,
+    marginRight: 70,
+    marginBottom: 20,
+    borderRadius: 20,
   },
-  forgot:{
-    color:"white",
-    fontSize:11
+  registerButton: {
+    marginLeft: 70,
+    marginRight: 70,
+    marginBottom: 20,
+    borderRadius: 20,
   },
-  loginBtn:{
-    width:"80%",
-    backgroundColor:"#00aaff",
-    borderRadius:25,
-    height:50,
-    alignItems:"center",
-    justifyContent:"center",
-    marginTop:40,
-    marginBottom:10
-  },
-  loginText:{
-    color:"white"
+  registerText: {
+      textAlign: "center",
+      marginTop: 20,
+      marginBottom: 20,
+      fontSize: 15,
+      fontWeight: "600"
+
   }
 });
