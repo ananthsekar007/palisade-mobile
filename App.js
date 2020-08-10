@@ -15,12 +15,12 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
-import TestCounter from "./src/screens/testCounter";
+import Login from './src/screens/Auth/Login'
 
 class App extends React.Component {
     render() {
         return (
-            <TestCounter />
+            <Login />
         )
     }
 }
