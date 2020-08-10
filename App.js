@@ -15,12 +15,13 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
-import Login from "./src/screens/Auth/login"
+import Signup from './src/screens/Auth/Signup';
+import Login from "./src/screens/Auth/Signup"
 
 class App extends React.Component {
     render() {
         return (
-            <Login />
+            <Signup/>
         )
     }
 }
