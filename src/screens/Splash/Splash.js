@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Image, StatusBar, StyleSheet, Dimensions} from 'react-native';
 import {CommonActions} from '@react-navigation/native';
+import logo from './../../../assets/images/palisade.png';
 
+const {height: HEIGHT} = Dimensions.get("screen")
 export default class Splash extends Component {
   constructor(props) {
     super(props);
@@ -10,24 +12,42 @@ export default class Splash extends Component {
 
   componentDidMount() {
     setTimeout(() => {
-        this.props.navigation.dispatch(
-          CommonActions.reset({
-            index: 1,
-            routes: [{name: 'Login'}],
-          }),
-        );
-        this.props.navigation.navigate('Login');
-        this.setState({
-          isLoading: false,
-        });
-      }, 2000);
+      this.props.navigation.dispatch(
+        CommonActions.reset({
+          index: 1,
+          routes: [{name: 'Login'}],
+        }),
+      );
+      this.props.navigation.navigate('Login');
+      this.setState({
+        isLoading: false,
+      });
+    }, 2000);
   }
 
   render() {
     return (
-      <View>
-        <Text> Splash </Text>
+      <View style={styles.background}>
+        <StatusBar
+          backgroundColor={'#F1F1F1'}
+          barStyle={('default', 'dark-content')}
+        />
+        <View style={styles.container}>
+          <Image source={logo} style={styles.logo}/>
+        </View>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  background: {
+    backgroundColor: '#F1F1F1',
+  },
+  container: {
+    marginTop: HEIGHT / 4,
+  },
+  logo: {
+      alignSelf: 'center',
+  }
+});
