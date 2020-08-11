@@ -43,7 +43,6 @@ export default class Signup extends React.Component{
                       }}
                       mode={'outlined'}
                       label={'Email'}
-                      autoFocus={true}
                       sel={'#1C7CC2'}
                       keyboardType={'default'}
                       onChangeText={(email) => this.setState({email})}
@@ -60,7 +59,6 @@ export default class Signup extends React.Component{
                       mode={'outlined'}
                       label={'Password'}
                       secureTextEntry={true}
-                      autoFocus={true}
                       sel={'#1C7CC2'}
                       keyboardType={'default'}
                       onChangeText={(password) => this.setState({password})}
