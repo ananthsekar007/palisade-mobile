@@ -8,20 +8,21 @@
 
 import React from 'react';
 import 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import {Login, Signup} from './src/screens';
 const Stack = createStackNavigator();
 class App extends React.Component {
-    render() {
-        return (
-            <NavigationContainer>
-
-            </NavigationContainer>
-        )
-    }
+  render() {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Signup" component={Signup} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
 }
-
-
 
 export default App;
