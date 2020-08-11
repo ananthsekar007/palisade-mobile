@@ -7,21 +7,13 @@
  */
 
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
-import Signup from './src/screens/Auth/Signup';
-import Login from "./src/screens/Auth/Signup"
+import AppContainer from './src/screens/Navigation/AppContainer'
+
 
 class App extends React.Component {
     render() {
         return (
-            <Signup/>
+            <AppContainer/>
         )
     }
 }

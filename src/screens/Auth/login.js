@@ -2,6 +2,8 @@ import React from 'react';
 import {StyleSheet, Text, View, StatusBar, TouchableOpacity} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
 
+
+
 export default class App extends React.Component {
   render() {
     state = {
@@ -54,7 +56,8 @@ export default class App extends React.Component {
         <Button
           style={styles.registerButton}
           mode="contained"
-          color={'#003C69'}>
+          color={'#003C69'}
+          onPress={()=> this.props.navigation.navigate('signup')}>
           Register
         </Button>
       </View>

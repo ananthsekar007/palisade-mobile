@@ -77,7 +77,8 @@ export default class Signup extends React.Component{
                     <Button
                         style={styles.registerButton}
                         mode="contained"
-                        color={'#003C69'}>
+                        color={'#003C69'}
+                        onPress={()=> this.props.navigation.navigate('login')}>
                         Sign In
                     </Button>
                 </View>
