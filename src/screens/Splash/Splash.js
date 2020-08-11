@@ -22,7 +22,7 @@ export default class Splash extends Component {
       this.setState({
         isLoading: false,
       });
-    }, 2000);
+    }, 1000);
   }
 
   render() {
