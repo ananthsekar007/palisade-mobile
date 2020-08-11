@@ -1,99 +1,110 @@
 import React from 'react';
-import {StyleSheet, Text, View, StatusBar, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  StatusBar,
+  TouchableOpacity,
+  Dimensions,
+  Image,
+} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
+import logo from './../../../assets/images/palisade.png';
 
-export default class Signup extends React.Component{
-    render(){
-        state = {
-            name: '',
-            email: '',
-            password: ''
-        };
-        return(
-             <View style={styles.background}>
-                <StatusBar
-                  backgroundColor={'#F1F1F1'}
-                  barStyle={('default', 'dark-content')}
-                />
-                <Text style={styles.headerText}>Palisade</Text>
-                <View View style = {styles.textContainer}>
-                    <TextInput
-                       style={styles.textView}
-                       theme={{
-                        colors: {
-                        primary: '#1C7CC2',
-                        underlineColor: 'transparent',
-                       },
-                      }}
-                      mode={'outlined'}
-                      label={'Name'}
-                      autoFocus={true}
-                      sel={'#1C7CC2'}
-                      keyboardType={'default'}
-                      onChangeText={(name) => this.setState({name})}
-                    />
+const {height: HEIGHT} = Dimensions.get('screen');
+export default class Signup extends React.Component {
+  render() {
+    state = {
+      name: '',
+      email: '',
+      password: '',
+    };
+    return (
+      <View style={styles.background}>
+        <StatusBar
+          backgroundColor={'#F1F1F1'}
+          barStyle={('default', 'dark-content')}
+        />
+        <View style={styles.imageContainer}>
+          <Image source={logo} style={styles.image} />
+        </View>
+        <View View style={styles.textContainer}>
+          <TextInput
+            style={styles.textView}
+            theme={{
+              colors: {
+                primary: '#1C7CC2',
+                underlineColor: 'transparent',
+              },
+            }}
+            mode={'outlined'}
+            label={'Name'}
+            autoFocus={true}
+            sel={'#1C7CC2'}
+            keyboardType={'default'}
+            onChangeText={(name) => this.setState({name})}
+          />
 
-                    <TextInput
-                      style={styles.textView}
-                      theme={{
-                        colors: {
-                        primary: '#1C7CC2',
-                        underlineColor: 'transparent',
-                       },
-                      }}
-                      mode={'outlined'}
-                      label={'Email'}
-                      sel={'#1C7CC2'}
-                      keyboardType={'default'}
-                      onChangeText={(email) => this.setState({email})}
-                    />
+          <TextInput
+            style={styles.textView}
+            theme={{
+              colors: {
+                primary: '#1C7CC2',
+                underlineColor: 'transparent',
+              },
+            }}
+            mode={'outlined'}
+            label={'Email'}
+            sel={'#1C7CC2'}
+            keyboardType={'default'}
+            onChangeText={(email) => this.setState({email})}
+          />
 
-                    <TextInput
-                      style={styles.textView}
-                      theme={{
-                        colors: {
-                        primary: '#1C7CC2',
-                        underlineColor: 'transparent',
-                       },
-                      }}
-                      mode={'outlined'}
-                      label={'Password'}
-                      secureTextEntry={true}
-                      sel={'#1C7CC2'}
-                      keyboardType={'default'}
-                      onChangeText={(password) => this.setState({password})}
-                    />
+          <TextInput
+            style={styles.textView}
+            theme={{
+              colors: {
+                primary: '#1C7CC2',
+                underlineColor: 'transparent',
+              },
+            }}
+            mode={'outlined'}
+            label={'Password'}
+            secureTextEntry={true}
+            sel={'#1C7CC2'}
+            keyboardType={'default'}
+            onChangeText={(password) => this.setState({password})}
+          />
 
-                    <Button style={styles.loginButton} mode="contained" color={'#1C7CC2'}>
-                          Register
-                    </Button>
+          <Button style={styles.loginButton} mode="contained" color={'#1C7CC2'}>
+            Register
+          </Button>
 
-                    <TouchableOpacity>
-                        <Text style = {styles.registerText}>Have an account?</Text>
-                    </TouchableOpacity>
+          <TouchableOpacity>
+            <Text style={styles.registerText}>Have an account?</Text>
+          </TouchableOpacity>
 
-                    <Button
-                        style={styles.registerButton}
-                        mode="contained"
-                        color={'#003C69'}
-                        onPress={()=> this.props.navigation.navigate('Login')}>
-                        Sign In
-                    </Button>
-                </View>
-             </View>
-
-        )
-    }
+          <Button
+            style={styles.registerButton}
+            mode="contained"
+            color={'#003C69'}
+            onPress={() => this.props.navigation.navigate('Login')}>
+            Sign In
+          </Button>
+        </View>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-  headerText :{
-    textAlign: "center",
+  headerText: {
+    textAlign: 'center',
     marginTop: 100,
     fontSize: 30,
-    fontWeight: "bold",
-    fontFamily: "AlfaSlabOne-Regular",
-    marginBottom: 80
+    fontWeight: 'bold',
+    fontFamily: 'AlfaSlabOne-Regular',
+    marginBottom: 80,
   },
   background: {
     backgroundColor: '#F1F1F1',
@@ -119,11 +130,21 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   registerText: {
-      textAlign: "center",
-      marginTop: 20,
-      marginBottom: 20,
-      fontSize: 15,
-      fontWeight: "600"
-
-  }
+    textAlign: 'center',
+    marginTop: 20,
+    marginBottom: 20,
+    fontSize: 15,
+    fontWeight: '600',
+  },
+  imageContainer: {
+    justifyContent: 'center',
+    width: 120,
+    height: 120,
+    alignSelf: 'center',
+    marginTop: 70,
+  },
+  image: {
+    flex: 1,
+    maxWidth: '100%',
+  },
 });
