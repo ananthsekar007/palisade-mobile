@@ -16,7 +16,7 @@ export default class Signup extends React.Component{
                   barStyle={('default', 'dark-content')}
                 />
                 <Text style={styles.headerText}>Palisade</Text>
-                <View View style = {styles.textContainer}> 
+                <View View style = {styles.textContainer}>
                     <TextInput
                        style={styles.textView}
                        theme={{
@@ -69,21 +69,21 @@ export default class Signup extends React.Component{
                     <Button style={styles.loginButton} mode="contained" color={'#1C7CC2'}>
                           Register
                     </Button>
-                    
+
                     <TouchableOpacity>
-                        <Text style = {styles.registerText}>Have an account?</Text> 
+                        <Text style = {styles.registerText}>Have an account?</Text>
                     </TouchableOpacity>
 
                     <Button
                         style={styles.registerButton}
                         mode="contained"
                         color={'#003C69'}
-                        onPress={()=> this.props.navigation.navigate('login')}>
+                        onPress={()=> this.props.navigation.navigate('Login')}>
                         Sign In
                     </Button>
                 </View>
              </View>
-             
+
         )
     }
 }
