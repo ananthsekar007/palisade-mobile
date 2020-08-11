@@ -4,7 +4,7 @@ import {TextInput, Button} from 'react-native-paper';
 
 
 
-export default class App extends React.Component {
+export default class Login extends React.Component {
   render() {
     state = {
       email: '',
