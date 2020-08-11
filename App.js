@@ -7,13 +7,17 @@
  */
 
 import React from 'react';
-import AppContainer from './src/screens/Navigation/AppContainer'
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-
+const Stack = createStackNavigator();
 class App extends React.Component {
     render() {
         return (
-            <AppContainer/>
+            <NavigationContainer>
+
+            </NavigationContainer>
         )
     }
 }
