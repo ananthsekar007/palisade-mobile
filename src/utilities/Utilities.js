@@ -1,7 +1,7 @@
-// import {
-//     showErrorMessage,
-//     showSuccessMessage
-// } from "./NotificationUtilities";
+import {
+    showErrorMessage,
+    showSuccessMessage
+} from "./NotificationUtilities";
 
 
 export const normalizeResponseErrors = res => {
