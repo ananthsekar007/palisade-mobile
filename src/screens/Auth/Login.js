@@ -6,18 +6,24 @@ import {
   StatusBar,
   TouchableOpacity,
   Image,
-  Dimensions
+  Dimensions,
 } from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
 import logo from './../../../assets/images/palisade.png';
 
-const {height: HEIGHT} = Dimensions.get("screen")
+const {height: HEIGHT} = Dimensions.get('screen');
 export default class Login extends React.Component {
-  render() {
-    state = {
+  constructor(props) {
+    super(props);
+    this.state = {
       email: '',
       password: '',
     };
+  }
+
+  componentDidMount() {}
+
+  render() {
     return (
       <View style={styles.background}>
         <StatusBar
@@ -29,6 +35,7 @@ export default class Login extends React.Component {
         </View>
         <View style={styles.textContainer}>
           <TextInput
+            value={this.state.email}
             style={styles.textView}
             theme={{
               colors: {
@@ -44,6 +51,7 @@ export default class Login extends React.Component {
             onChangeText={(email) => this.setState({email})}
           />
           <TextInput
+            value={this.state.password}
             mode={'outlined'}
             theme={{
               colors: {
@@ -119,7 +127,7 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     alignSelf: 'center',
-    marginTop: 80
+    marginTop: 80,
   },
   image: {
     flex: 1,
