@@ -7,13 +7,15 @@
  */
 
 import React from 'react';
-import AppContainer from './src/screens/Navigation/AppContainer'
+import AppContainer from './src/screens/Navigation/AppContainer';
+import AuthNavigation from './src/screens/Navigation/AuthNavigation';
+
 
 
 class App extends React.Component {
     render() {
         return (
-            <AppContainer/>
+            <AuthNavigation/>
         )
     }
 }
