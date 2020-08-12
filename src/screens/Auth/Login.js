@@ -1,10 +1,18 @@
 import React from 'react';
-import {StyleSheet, Text, View, StatusBar, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  StatusBar,
+  TouchableOpacity,
+  Image,
+  Dimensions
+} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
+import logo from './../../../assets/images/palisade.png';
 
-
-
-export default class App extends React.Component {
+const {height: HEIGHT} = Dimensions.get("screen")
+export default class Login extends React.Component {
   render() {
     state = {
       email: '',
@@ -16,7 +24,9 @@ export default class App extends React.Component {
           backgroundColor={'#F1F1F1'}
           barStyle={('default', 'dark-content')}
         />
-        <Text style={styles.headerText}>Palisade</Text>
+        <View style={styles.imageContainer}>
+          <Image source={logo} style={styles.image} />
+        </View>
         <View style={styles.textContainer}>
           <TextInput
             style={styles.textView}
@@ -51,13 +61,13 @@ export default class App extends React.Component {
           Login
         </Button>
         <TouchableOpacity>
-            <Text style={styles.registerText}>Don't have an account?</Text>
+          <Text style={styles.registerText}>Don't have an account?</Text>
         </TouchableOpacity>
         <Button
           style={styles.registerButton}
           mode="contained"
           color={'#003C69'}
-          onPress={()=> this.props.navigation.navigate('signup')}>
+          onPress={() => this.props.navigation.navigate('Signup')}>
           Register
         </Button>
       </View>
@@ -66,13 +76,13 @@ export default class App extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  headerText :{
-    textAlign: "center",
+  headerText: {
+    textAlign: 'center',
     marginTop: 100,
     fontSize: 30,
-    fontWeight: "bold",
-    fontFamily: "AlfaSlabOne-Regular",
-    marginBottom: 80
+    fontWeight: 'bold',
+    fontFamily: 'AlfaSlabOne-Regular',
+    marginBottom: 80,
   },
   background: {
     backgroundColor: '#F1F1F1',
@@ -98,11 +108,21 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   registerText: {
-      textAlign: "center",
-      marginTop: 20,
-      marginBottom: 20,
-      fontSize: 15,
-      fontWeight: "600"
-
-  }
+    textAlign: 'center',
+    marginTop: 20,
+    marginBottom: 20,
+    fontSize: 15,
+    fontWeight: '600',
+  },
+  imageContainer: {
+    justifyContent: 'center',
+    width: 120,
+    height: 120,
+    alignSelf: 'center',
+    marginTop: 80
+  },
+  image: {
+    flex: 1,
+    maxWidth: '100%',
+  },
 });
