@@ -1,6 +1,6 @@
 import {BASE_URL, AUTH_TOKEN} from './../configs/Constants';
 import AsyncStorage from '@react-native-community/async-storage';
-
+import {post} from "./fetch_requests";
 export const login = async (email, password) => {
   const header = new Headers();
   header.append('Content-Type', 'application/json');
