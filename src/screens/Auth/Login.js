@@ -6,18 +6,47 @@ import {
   StatusBar,
   TouchableOpacity,
   Image,
-  Dimensions
+  Dimensions,
 } from 'react-native';
+import {login, setAuthToken} from './../../actions/auth';
 import {TextInput, Button} from 'react-native-paper';
 import logo from './../../../assets/images/palisade.png';
 
-const {height: HEIGHT} = Dimensions.get("screen")
+const {height: HEIGHT} = Dimensions.get('screen');
 export default class Login extends React.Component {
-  render() {
-    state = {
+  constructor(props) {
+    super(props);
+    this.state = {
       email: '',
       password: '',
     };
+    this.login = this.login.bind(this);
+  }
+
+  componentDidMount() {}
+
+  login = () => {
+    if (
+      this.state.email.trim() !== null &&
+      this.state.password.trim() !== null
+    ) {
+      return new Promise((resolve, reject) => {
+        login(this.state.email, this.state.password)
+          .then((json) => {
+            if (json) {
+              console.log(json);
+              setAuthToken(json.access_token);
+              this.props.navigation.navigate('Home');
+            }
+          })
+          .finally(() => {
+            resolve();
+          });
+      });
+    }
+  };
+
+  render() {
     return (
       <View style={styles.background}>
         <StatusBar
@@ -29,6 +58,7 @@ export default class Login extends React.Component {
         </View>
         <View style={styles.textContainer}>
           <TextInput
+            value={this.state.email}
             style={styles.textView}
             theme={{
               colors: {
@@ -44,6 +74,7 @@ export default class Login extends React.Component {
             onChangeText={(email) => this.setState({email})}
           />
           <TextInput
+            value={this.state.password}
             mode={'outlined'}
             theme={{
               colors: {
@@ -57,7 +88,7 @@ export default class Login extends React.Component {
             onChangeText={(password) => this.setState({password})}
           />
         </View>
-        <Button style={styles.loginButton} mode="contained" color={'#1C7CC2'}>
+        <Button style={styles.loginButton} mode="contained" color={'#1C7CC2'} onPress={this.login}>
           Login
         </Button>
         <TouchableOpacity>
@@ -119,7 +150,7 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     alignSelf: 'center',
-    marginTop: 80
+    marginTop: 80,
   },
   image: {
     flex: 1,
