@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import { View, Text } from 'react-native';
-
+import React, {Component} from 'react';
+import {View, Text} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import AppLayout from './../../AppLayout/AppLayout';
 export default class CompletedTasks extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-    };
+    this.state = {};
   }
 
   render() {
     return (
       <View>
-        <Text> CompletedTasks </Text>
+        <AppLayout navigation={this.props.navigation} title="Completed Tasks" />
       </View>
     );
   }
