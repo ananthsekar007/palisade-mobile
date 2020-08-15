@@ -19,6 +19,7 @@ export default class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
+      loading: false,
     };
     this.login = this.login.bind(this);
   }
@@ -30,6 +31,9 @@ export default class Login extends React.Component {
       this.state.email.trim() !== null &&
       this.state.password.trim() !== null
     ) {
+      this.setState({
+        loading: true,
+      });
       return new Promise((resolve, reject) => {
         login(this.state.email, this.state.password)
           .then((json) => {
@@ -40,6 +44,9 @@ export default class Login extends React.Component {
             }
           })
           .finally(() => {
+            this.setState({
+              loading: false,
+            });
             resolve();
           });
       });
@@ -88,7 +95,13 @@ export default class Login extends React.Component {
             onChangeText={(password) => this.setState({password})}
           />
         </View>
-        <Button style={styles.loginButton} mode="contained" color={'#1C7CC2'} onPress={this.login}>
+        <Button
+          style={styles.loginButton}
+          mode="contained"
+          color={'#1C7CC2'}
+          onPress={this.login}
+          disabled={this.state.loading}
+          loading={this.state.loading}>
           Login
         </Button>
         <TouchableOpacity>
