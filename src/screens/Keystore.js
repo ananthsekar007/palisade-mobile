@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-
+import AppLayout from "./../AppLayout/AppLayout"
 export default class Keystore extends Component {
   constructor(props) {
     super(props);
@@ -11,7 +11,7 @@ export default class Keystore extends Component {
   render() {
     return (
       <View>
-        <Text> Keystore </Text>
+      <AppLayout navigation={this.props.navigation} title="Key Store" />
       </View>
     );
   }
