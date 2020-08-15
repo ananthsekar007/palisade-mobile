@@ -13,6 +13,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {Login, Signup} from './src/screens';
 import Splash from './src/screens/Splash/Splash';
 import Home from './src/screens/Auth/Home';
+
+
 const Stack = createStackNavigator();
 class App extends React.Component {
   render() {
