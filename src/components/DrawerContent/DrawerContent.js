@@ -95,7 +95,7 @@ export default class DrawerContent extends Component {
             labelStyle={styles.labelStyle}
             label="Sign Out"
             onPress={() => {
-              console.log('pressed');
+              this.showDialog()
             }}
           />
         </Drawer.Section>
