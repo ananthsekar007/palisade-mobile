@@ -10,20 +10,6 @@ export default class Splash extends Component {
     this.state = {};
   }
 
-  componentDidMount() {
-    setTimeout(() => {
-      this.props.navigation.dispatch(
-        CommonActions.reset({
-          index: 1,
-          routes: [{name: 'Login'}],
-        }),
-      );
-      this.props.navigation.navigate('Login');
-      this.setState({
-        isLoading: false,
-      });
-    }, 1000);
-  }
 
   render() {
     return (
@@ -42,6 +28,7 @@ export default class Splash extends Component {
 
 const styles = StyleSheet.create({
   background: {
+      flex: 1,
     backgroundColor: '#F1F1F1',
   },
   container: {
