@@ -9,7 +9,7 @@ import {
   Image,
 } from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
-import { setAuthToken, signup } from '../../actions/authSignUp';
+import { setAuthToken, register } from '../../actions/auth';
 import logo from './../../../assets/images/palisade.png';
 
 const {height: HEIGHT} = Dimensions.get('screen');
@@ -33,7 +33,7 @@ export default class Signup extends React.Component {
       this.state.password.trim() !== null
     ) {
       return new Promise((resolve, reject) =>{
-         signup(this.state.name, this.state.email, this.state.password)
+         register(this.state.name, this.state.email, this.state.password)
            .then((json) => {
              if (json) {
                console.log(json);
