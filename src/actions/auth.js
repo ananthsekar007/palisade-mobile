@@ -1,4 +1,4 @@
-import {BASE_URL, AUTH_TOKEN} from './../configs/Constants';
+import {BASE_URL, AUTH_TOKEN, USER_INFO} from './../configs/Constants';
 import AsyncStorage from '@react-native-community/async-storage';
 import {post} from "./fetch_requests";
 
@@ -36,3 +36,16 @@ export const getAuthToken = async () => {
 export const removeAuthToken = async () => {
     await AsyncStorage.removeItem(AUTH_TOKEN)
 }
+
+export const setUserInfo = async (info) => {
+    await AsyncStorage.setItem(USER_INFO, info);
+  };
+
+  export const getUserInfo = async () => {
+    let userInfo = await AsyncStorage.getItem(USER_INFO);
+    return userInfo;
+  };
+
+  export const removeUserInfo = async () => {
+      await AsyncStorage.removeItem(USER_INFO)
+  }
