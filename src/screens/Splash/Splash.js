@@ -10,6 +10,17 @@ export default class Splash extends Component {
     this.state = {};
   }
 
+  componentDidMount() {
+    setTimeout(() => {
+        this.props.navigation.dispatch(
+          CommonActions.reset({
+            index: 1,
+            routes: [{name: 'Login'}],
+          }),
+        );
+        this.props.navigation.navigate('Login');
+      }, 2000);
+  }
 
   render() {
     return (

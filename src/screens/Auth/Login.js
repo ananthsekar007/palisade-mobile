@@ -36,7 +36,7 @@ export default class Login extends React.Component {
             if (json) {
               console.log(json);
               setAuthToken(json.access_token);
-              this.props.navigation.navigate('Tasks');
+              this.props.navigation.navigate('Home');
             }
           })
           .finally(() => {
