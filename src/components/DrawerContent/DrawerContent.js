@@ -41,14 +41,14 @@ export default class DrawerContent extends Component {
                 labelStyle={styles.labelStyle}
                 label="Completed Tasks"
                 onPress={() => {
-                    this.props.navigation.navigate('ArchievedTasks')
+                    this.props.navigation.navigate('CompletedTasks')
                 }}
               />
               <DrawerItem
                 labelStyle={styles.labelStyle}
                 label="Archieved Tasks"
                 onPress={() => {
-                    this.props.navigation.navigate('CompletedTasks')                }}
+                    this.props.navigation.navigate('ArchievedTasks')                }}
               />
               <DrawerItem
                 labelStyle={styles.labelStyle}
