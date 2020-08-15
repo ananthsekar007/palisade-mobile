@@ -22,12 +22,12 @@ export default class Signup extends React.Component {
       password: '',
       loading: false,
     };
-    this.signup = this.signup.bind(this);
+    this.register = this.register.bind(this);
   }
 
   componentDidMount() {}
 
-  signup = () => {
+  register = () => {
     if (
       this.state.name.trim() !== null &&
       this.state.email.trim() !== null &&
@@ -117,6 +117,7 @@ export default class Signup extends React.Component {
             mode="contained"
             color={'#1C7CC2'}
             loading={this.state.loading}
+            onPress={this.register}
             disabled={this.state.loading}>
             Register
           </Button>
