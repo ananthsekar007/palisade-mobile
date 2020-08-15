@@ -9,22 +9,23 @@ import {
   Image,
 } from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
-import { setAuthToken, register } from '../../actions/auth';
+import {setAuthToken, register} from '../../actions/auth';
 import logo from './../../../assets/images/palisade.png';
 
 const {height: HEIGHT} = Dimensions.get('screen');
 export default class Signup extends React.Component {
   constructor(props) {
     super(props);
-        this.state = {
-          name: '',
-          email: '',
-          password: '',
-        };
-        this.signup = this.signup.bind(this);
+    this.state = {
+      name: '',
+      email: '',
+      password: '',
+      loading: false,
+    };
+    this.signup = this.signup.bind(this);
   }
 
-  componentDidMount () {}
+  componentDidMount() {}
 
   signup = () => {
     if (
@@ -32,21 +33,27 @@ export default class Signup extends React.Component {
       this.state.email.trim() !== null &&
       this.state.password.trim() !== null
     ) {
-      return new Promise((resolve, reject) =>{
-         register(this.state.name, this.state.email, this.state.password)
-           .then((json) => {
-             if (json) {
-               console.log(json);
-               setAuthToken(json.access_token);
-               this.props.navigation.navigate('Login');
-             }
-           })
-           .finally(() => {
-             resolve();
-           });
+      this.setState({
+        loading: true,
+      });
+      return new Promise((resolve, reject) => {
+        register(this.state.name, this.state.email, this.state.password)
+          .then((json) => {
+            if (json) {
+              console.log(json);
+              setAuthToken(json.access_token);
+              this.props.navigation.navigate('Home');
+            }
+          })
+          .finally(() => {
+            this.setState({
+              loading: false,
+            });
+            resolve();
+          });
       });
     }
-  }
+  };
   render() {
     return (
       <View style={styles.background}>
@@ -105,7 +112,12 @@ export default class Signup extends React.Component {
             onChangeText={(password) => this.setState({password})}
           />
 
-          <Button style={styles.loginButton} mode="contained" color={'#1C7CC2'}>
+          <Button
+            style={styles.loginButton}
+            mode="contained"
+            color={'#1C7CC2'}
+            loading={this.state.loading}
+            disabled={this.state.loading}>
             Register
           </Button>
 
