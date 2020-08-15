@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {View, Text, Image, StatusBar, StyleSheet, Dimensions} from 'react-native';
 import {CommonActions} from '@react-navigation/native';
 import logo from './../../../assets/images/palisade.png';
-
+import { getAuthToken } from "./../../actions/auth";
 const {height: HEIGHT} = Dimensions.get("screen")
 export default class Splash extends Component {
   constructor(props) {
@@ -10,15 +10,23 @@ export default class Splash extends Component {
     this.state = {};
   }
 
-  componentDidMount() {
-    setTimeout(() => {
-        this.props.navigation.dispatch(
-          CommonActions.reset({
-            index: 1,
-            routes: [{name: 'Login'}],
-          }),
-        );
-        this.props.navigation.navigate('Login');
+   componentDidMount = async () =>  {
+    setTimeout(async () => {
+        let token = await getAuthToken();
+        console.log("token", token);
+        if(token) {
+            this.props.navigation.navigate('Home');
+        }
+        else {
+            this.props.navigation.dispatch(
+                CommonActions.reset({
+                  index: 1,
+                  routes: [{name: 'Login'}],
+                }),
+              );
+              this.props.navigation.navigate('Login');
+        }
+
       }, 2000);
   }
 
