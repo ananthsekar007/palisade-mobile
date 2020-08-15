@@ -1,15 +1,16 @@
-import Snackbar from 'react-native-snackbar';
-
+import React from 'react';
+import { Snackbar } from "react-native-snackbar-reddit";
 export const showSuccessMessage = (message) => {
-    Snackbar.show({
-        text: message,
-        duration: Snackbar.LENGTH_SHORT,
-    });
-}
+    Snackbar.success({
+        content: message,
+        duration: 1
+      });
+};
 
 export const showErrorMessage = (message) => {
-    Snackbar.show({
-        text: message,
-        duration: Snackbar.LENGTH_SHORT,
-    });
-}
+    Snackbar.error({
+        content: message,
+        duration: 1
+      });
+};
+

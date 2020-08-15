@@ -9,16 +9,47 @@ import {
   Switch,
 } from 'react-native-paper';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
+import CustomConfirmationModal from './../CustomConfirmationModal/CustomConfirmationModal';
 import Logo from './../../../assets/images/palisade.png';
+import AsyncStorage from '@react-native-community/async-storage';
 export default class DrawerContent extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+        visible: false
+    };
+    this.confirm = this.confirm.bind(this);
+    this.showDialog = this.showDialog.bind(this);
+    this.hideDialog = this.hideDialog.bind(this);
+  }
+
+  confirm = () => {
+    AsyncStorage.clear();
+    this.props.navigation.navigate('Login')
+  }
+
+  showDialog = () => {
+      this.setState({
+          visible: true
+      })
+  }
+
+  hideDialog = () => {
+    this.setState({
+        visible: false
+    })
   }
 
   render() {
     return (
       <View style={{flex: 1}}>
+      <CustomConfirmationModal
+        visible={this.state.visible}
+        title="Sign Out"
+        description="Do you want to sign out?"
+        confirm={this.confirm}
+        hideDialog={this.hideDialog}
+      />
         <DrawerContentScrollView {...this.props}>
           <View style={styles.DrawerContent}>
             <View style={styles.userInfoSection}>
