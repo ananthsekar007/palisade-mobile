@@ -20,6 +20,7 @@ import {
   Keystore,
   Tasks,
 } from './src/screens';
+import DrawerContent from "./src/components/DrawerContent/DrawerContent"
 import Splash from './src/screens/Splash/Splash';
 import Home from './src/screens/Auth/Home';
 
@@ -27,9 +28,9 @@ import Home from './src/screens/Auth/Home';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
-const DrawerNav = () => {
+const HomeNav = () => {
   return (
-    <Drawer.Navigator>
+    <Drawer.Navigator drawerContent = { props => <DrawerContent {...props} />} initialRouteName="Tasks">
       <Drawer.Screen component={Tasks} name="Tasks" />
       <Drawer.Screen component={ArchievedTasks} name="ArchievedTasks" />
       <Drawer.Screen component={CompletedTasks} name="CompletedTasks" />
@@ -45,27 +46,17 @@ const AuthStack = () => {
       screenOptions={{
         headerShown: false,
       }}>
+      <Stack.Screen name="Splash" component={Splash} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Signup" component={Signup} />
-      <Stack.Screen name="Tasks" component={DrawerNav} />
+      <Stack.Screen name="Home" component={HomeNav} />
     </Stack.Navigator>
   );
 };
 const App = () => {
-  const [isLoading, setisLoading] = useState(true);
-  const [user, setUser] = useState(null);
-  useEffect(() => {
-    setTimeout(() => {
-      let token = getAuthToken();
-      if (token) {
-        setUser(token);
-      }
-      setisLoading(false);
-    }, 2000);
-  });
   return (
     <NavigationContainer>
-      {isLoading ? <Splash /> : user === null ? <DrawerNav /> : <AuthStack />}
+      <AuthStack />
     </NavigationContainer>
   );
 };
