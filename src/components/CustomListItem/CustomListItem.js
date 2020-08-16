@@ -18,6 +18,7 @@ class CustomListItem extends Component {
     this.archieve = this.archieve.bind(this);
     this.edit = this.edit.bind(this);
     this.delete = this.delete.bind(this);
+    this.moveToTasks = this.moveToTasks.bind(this);
   }
 
   onSelect = () => {
@@ -31,6 +32,10 @@ class CustomListItem extends Component {
   edit = () => {
     this.props.edit(this.props.id, this.props.title, this.props.description);
   };
+
+  moveToTasks = () => {
+      this.props.moveToTasks(this.props.id, this.props.isCompleted, this.props.isArchieved)
+  }
 
   delete = () => {
     this.props.delete(this.props.id);
@@ -88,6 +93,16 @@ class CustomListItem extends Component {
               <Icon
                 name={'edit'}
                 size={30}
+                color={'#1C7CC2'}
+                style={styles.Icon}
+              />
+            </TouchableOpacity>
+          )}
+          {this.props.revertVisible && (
+            <TouchableOpacity onPress={this.moveToTasks}>
+              <Icon
+                name={'undo'}
+                size={25}
                 color={'#1C7CC2'}
                 style={styles.Icon}
               />
