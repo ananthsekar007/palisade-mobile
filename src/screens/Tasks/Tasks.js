@@ -7,11 +7,16 @@ import {
   FlatList,
   RefreshControl,
 } from 'react-native';
-import {Button, TextInput,Paragraph, Dialog, Portal} from 'react-native-paper';
+import {Button, TextInput, Paragraph, Dialog, Portal} from 'react-native-paper';
 import CustomModal from './../../components/CustomModal/CustomModal';
 import AppLayout from './../../AppLayout/AppLayout';
 import CustomListItem from './../../components/CustomListItem/CustomListItem';
-import {getAllTasks, addTasks, deleteTasks, editTasks} from './../../actions/tasks';
+import {
+  getAllTasks,
+  addTasks,
+  deleteTasks,
+  editTasks,
+} from './../../actions/tasks';
 import CustomFab from './../../components/Customfab/CustomFab';
 export default class Tasks extends Component {
   constructor(props) {
@@ -20,14 +25,14 @@ export default class Tasks extends Component {
       visible: false,
       title: '',
       description: '',
-      editVisible : false,
+      editVisible: false,
       isCompleted: false,
       isArchieved: false,
       tasks: [],
       isRefreshing: false,
       loading: false,
       editId: null,
-      infoVisible: false
+      infoVisible: false,
     };
     this.hideModal = this.hideModal.bind(this);
     this.showModal = this.showModal.bind(this);
@@ -84,14 +89,14 @@ export default class Tasks extends Component {
 
   onSelect = (title, description, id, isCompleted, isArchieved) => {
     this.setState({
-        title,
-        description,
-        isArchieved,
-        isCompleted,
-        editId: id
-    })
+      title,
+      description,
+      isArchieved,
+      isCompleted,
+      editId: id,
+    });
     this.showInfo();
-  }
+  };
 
   addTask = () => {
     let body = {
@@ -99,8 +104,8 @@ export default class Tasks extends Component {
       description: this.state.description,
     };
     this.setState({
-        loading: true
-    })
+      loading: true,
+    });
     return new Promise((resolve, reject) => {
       addTasks(body)
         .then((json) => {
@@ -109,12 +114,12 @@ export default class Tasks extends Component {
           }
         })
         .finally(() => {
-            this.setState({
-                loading: false,
-                title: '',
-                description: ''
-            })
-            this.hideModal();
+          this.setState({
+            loading: false,
+            title: '',
+            description: '',
+          });
+          this.hideModal();
           this.initialLoad();
           resolve();
         });
@@ -123,103 +128,102 @@ export default class Tasks extends Component {
 
   delete = (taskId) => {
     return new Promise((resolve, reject) => {
-        deleteTasks(taskId)
-          .then((json) => {
-            if (json) {
-              resolve(json);
-            }
-          })
-          .finally(() => {
-            this.initialLoad();
-            resolve();
-          });
-      });
-  }
+      deleteTasks(taskId)
+        .then((json) => {
+          if (json) {
+            resolve(json);
+          }
+        })
+        .finally(() => {
+          this.initialLoad();
+          resolve();
+        });
+    });
+  };
 
   edit = (id, title, description) => {
     this.showeditModal();
     this.setState({
-        title,
-        description,
-        editId: id
-    })
-  }
+      title,
+      description,
+      editId: id,
+    });
+  };
 
   editTask = () => {
     let body = {
-        title: this.state.title,
-        descripiton: this.state.description,
-    }
-    console.log("body to edit", body);
+      title: this.state.title,
+      descripiton: this.state.description,
+    };
+    console.log('body to edit', body);
     this.setState({
-        editloading: true
-    })
+      editloading: true,
+    });
     return new Promise((resolve, reject) => {
-        editTasks(this.state.editId, body)
-          .then((json) => {
-            if (json) {
-              resolve(json);
-            }
-          })
-          .catch(err => {
-              reject();
-          })
-          .finally(() => {
-            this.setState({
-                editloading: false
-            })
-            this.hideeditModal();
-            this.initialLoad();
-            resolve();
+      editTasks(this.state.editId, body)
+        .then((json) => {
+          if (json) {
+            resolve(json);
+          }
+        })
+        .catch((err) => {
+          reject();
+        })
+        .finally(() => {
+          this.setState({
+            editloading: false,
           });
-      });
-  }
+          this.hideeditModal();
+          this.initialLoad();
+          resolve();
+        });
+    });
+  };
 
   archieve = (id, isCompleted, isArchieved) => {
     let body = {
-        isCompleted: !!isCompleted,
-        isArchieved: !isArchieved
-    }
+      isCompleted: !!isCompleted,
+      isArchieved: !isArchieved,
+    };
     return new Promise((resolve, reject) => {
-        editTasks(id, body)
-          .then((json) => {
-            if (json) {
-              resolve(json);
-            }
-          })
-          .catch(err => {
-              reject();
-          })
-          .finally(() => {
-            this.initialLoad();
-            resolve();
-          });
-      });
-  }
+      editTasks(id, body)
+        .then((json) => {
+          if (json) {
+            resolve(json);
+          }
+        })
+        .catch((err) => {
+          reject();
+        })
+        .finally(() => {
+          this.initialLoad();
+          resolve();
+        });
+    });
+  };
 
   complete = () => {
-
     let body = {
-        isCompleted: !this.state.isCompleted,
-        isArchieved: !!this.state.isArchieved
-    }
+      isCompleted: !this.state.isCompleted,
+      isArchieved: !!this.state.isArchieved,
+    };
     return new Promise((resolve, reject) => {
-        editTasks(this.state.editId, body)
-          .then((json) => {
-            if (json) {
-              resolve(json);
-            }
-          })
-          .catch(err => {
-              reject();
-          })
-          .finally(() => {
-            this.hideInfo();
-            this.initialLoad();
-            resolve();
-          });
-      });
-  }
+      editTasks(this.state.editId, body)
+        .then((json) => {
+          if (json) {
+            resolve(json);
+          }
+        })
+        .catch((err) => {
+          reject();
+        })
+        .finally(() => {
+          this.hideInfo();
+          this.initialLoad();
+          resolve();
+        });
+    });
+  };
 
   onRefresh = () => {
     this.initialLoad();
@@ -257,21 +261,21 @@ export default class Tasks extends Component {
 
   showeditModal = () => {
     this.setState({
-        editVisible: true,
+      editVisible: true,
     });
   };
 
   showInfo = () => {
-      this.setState({
-          infoVisible: true
-      })
-  }
+    this.setState({
+      infoVisible: true,
+    });
+  };
 
   hideInfo = () => {
-      this.setState({
-          infoVisible: false
-      })
-  }
+    this.setState({
+      infoVisible: false,
+    });
+  };
 
   Item = ({id, title, isCompleted, isArchieved, description}) => {
     return (
@@ -312,7 +316,7 @@ export default class Tasks extends Component {
               title: item.title,
               isCompleted: item.isCompleted,
               isArchieved: item.isArchieved,
-              description: item.description
+              description: item.description,
             });
           }}
           keyExtractor={(item) => item.task_id.toString()}
@@ -363,68 +367,72 @@ export default class Tasks extends Component {
           </View>
         </CustomModal>
         <CustomModal
-        visible={this.state.editVisible}
-        header="Add Task"
-        hideModal={this.hideeditModal}>
-        <View style={styles.inputContainer}>
-          <TextInput
-            value={this.state.title}
-            style={styles.textView}
-            theme={{
-              colors: {
-                primary: '#1C7CC2',
-                underlineColor: 'transparent',
-              },
-            }}
-            mode={'outlined'}
-            label={'Title'}
-            keyboardType={'default'}
-            onChangeText={(title) => this.setState({title})}
-          />
+          visible={this.state.editVisible}
+          header="Add Task"
+          hideModal={this.hideeditModal}>
+          <View style={styles.inputContainer}>
+            <TextInput
+              value={this.state.title}
+              style={styles.textView}
+              theme={{
+                colors: {
+                  primary: '#1C7CC2',
+                  underlineColor: 'transparent',
+                },
+              }}
+              mode={'outlined'}
+              label={'Title'}
+              keyboardType={'default'}
+              onChangeText={(title) => this.setState({title})}
+            />
 
-          <TextInput
-            value={this.state.description}
-            style={styles.textView}
-            theme={{
-              colors: {
-                primary: '#1C7CC2',
-                underlineColor: 'transparent',
-              },
-            }}
-            mode={'outlined'}
-            label={'Description'}
-            keyboardType={'default'}
-            onChangeText={(description) => this.setState({description})}
-          />
-          <Button
-            style={styles.button}
-            color={'#1C7CC2'}
-            mode={'contained'}
-            onPress={this.editTask}
-            loading={this.state.editloading}
-            disabled={this.state.editloading}>
-            Edit
-          </Button>
+            <TextInput
+              value={this.state.description}
+              style={styles.textView}
+              theme={{
+                colors: {
+                  primary: '#1C7CC2',
+                  underlineColor: 'transparent',
+                },
+              }}
+              mode={'outlined'}
+              label={'Description'}
+              keyboardType={'default'}
+              onChangeText={(description) => this.setState({description})}
+            />
+            <Button
+              style={styles.button}
+              color={'#1C7CC2'}
+              mode={'contained'}
+              onPress={this.editTask}
+              loading={this.state.editloading}
+              disabled={this.state.editloading}>
+              Edit
+            </Button>
+          </View>
+        </CustomModal>
+        <View>
+          <Portal>
+            <Dialog visible={this.state.infoVisible} onDismiss={this.hideInfo}>
+              <Dialog.Title>{'Task Title'}</Dialog.Title>
+              <Dialog.Content>
+                <Paragraph>{this.state.title}</Paragraph>
+              </Dialog.Content>
+              <Dialog.Title>{'Description'}</Dialog.Title>
+              <Dialog.Content>
+                <Paragraph>{this.state.description}</Paragraph>
+              </Dialog.Content>
+              <Dialog.Actions>
+                <Button color="#1C7CC2" onPress={this.complete}>
+                  {'Mark as complete'}
+                </Button>
+                <Button color="#1C7CC2" onPress={this.hideInfo}>
+                  {'Cancel'}
+                </Button>
+              </Dialog.Actions>
+            </Dialog>
+          </Portal>
         </View>
-      </CustomModal>
-      <View>
-        <Portal>
-          <Dialog visible={this.state.infoVisible} onDismiss={this.hideInfo}>
-            <Dialog.Title>{'Task Title'}</Dialog.Title>
-            <Dialog.Content>
-              <Paragraph>{this.state.title}</Paragraph>
-            </Dialog.Content>
-            <Dialog.Title>{'Description'}</Dialog.Title>
-            <Dialog.Content>
-              <Paragraph>{this.state.description}</Paragraph>
-            </Dialog.Content>
-            <Dialog.Actions>
-              <Button color="#1C7CC2" onPress={this.complete}>{'Mark as complete'}</Button>
-              <Button color="#1C7CC2" onPress={this.hideInfo}>{'Cancel'}</Button>
-            </Dialog.Actions>
-          </Dialog>
-        </Portal>
-      </View>
         <CustomFab iconName={'plus'} onPress={this.showModal} />
       </AppLayout>
     );
