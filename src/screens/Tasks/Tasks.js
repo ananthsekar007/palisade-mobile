@@ -3,6 +3,7 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 import CustomModal from './../../components/CustomModal/CustomModal';
 import AppLayout from './../../AppLayout/AppLayout';
+import { getAllTasks } from "./../../actions/tasks";
 import CustomFab from './../../components/Customfab/CustomFab';
 export default class Tasks extends Component {
   constructor(props) {
@@ -13,9 +14,33 @@ export default class Tasks extends Component {
       description: '',
       isCompleted: false,
       isArchieved: false,
+      tasks: []
     };
     this.hideModal = this.hideModal.bind(this);
     this.showModal = this.showModal.bind(this);
+  }
+
+  componentDidMount = () => {
+    return new Promise((resolve, reject) => {
+        getAllTasks()
+        .then(json => {
+          if (json) {
+            resolve(json.data)
+            console.log("json data", json.data)
+            this.setState({
+                tasks: json.data
+            })
+          } else {
+              this.setState({
+                  tasks: []
+              })
+          }
+        })
+        .finally(() => {
+          resolve();
+        });
+      })
+
   }
 
   hideModal = () => {
@@ -90,7 +115,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-      margin: 20,
+      margin: 30,
       borderRadius: 20
   },
 });
