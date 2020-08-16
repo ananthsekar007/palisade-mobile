@@ -44,6 +44,7 @@ export default class Tasks extends Component {
     this.showInfo = this.showInfo.bind(this);
     this.hideInfo = this.hideInfo.bind(this);
     this.archieve = this.archieve.bind(this);
+    this.complete = this.complete.bind(this);
   }
 
   componentDidMount = () => {
@@ -81,10 +82,13 @@ export default class Tasks extends Component {
     });
   };
 
-  onSelect = (title, description) => {
+  onSelect = (title, description, id, isCompleted, isArchieved) => {
     this.setState({
         title,
-        description
+        description,
+        isArchieved,
+        isCompleted,
+        editId: id
     })
     this.showInfo();
   }
@@ -171,7 +175,7 @@ export default class Tasks extends Component {
       });
   }
 
-  archieve = (id, isCompleted, isArchieved) => {    
+  archieve = (id, isCompleted, isArchieved) => {
     let body = {
         isCompleted: !!isCompleted,
         isArchieved: !isArchieved
@@ -187,6 +191,30 @@ export default class Tasks extends Component {
               reject();
           })
           .finally(() => {
+            this.initialLoad();
+            resolve();
+          });
+      });
+  }
+
+  complete = () => {
+
+    let body = {
+        isCompleted: !this.state.isCompleted,
+        isArchieved: !!this.state.isArchieved
+    }
+    return new Promise((resolve, reject) => {
+        editTasks(this.state.editId, body)
+          .then((json) => {
+            if (json) {
+              resolve(json);
+            }
+          })
+          .catch(err => {
+              reject();
+          })
+          .finally(() => {
+            this.hideInfo();
             this.initialLoad();
             resolve();
           });
@@ -391,6 +419,7 @@ export default class Tasks extends Component {
               <Paragraph>{this.state.description}</Paragraph>
             </Dialog.Content>
             <Dialog.Actions>
+              <Button color="#1C7CC2" onPress={this.complete}>{'Mark as complete'}</Button>
               <Button color="#1C7CC2" onPress={this.hideInfo}>{'Cancel'}</Button>
             </Dialog.Actions>
           </Dialog>
