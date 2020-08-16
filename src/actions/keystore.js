@@ -19,3 +19,12 @@ export const addKeys = async (body) => {
 
     return post(`${BASE_URL}keystore`, header, body);
 }
+
+export const deleteKeys = async (id) => {
+    let token = await getAuthToken();
+    const header = new Headers();
+    header.append('Content-Type', 'application/json');
+    header.append('Authorization', `Bearer ${token}`);
+
+    return Delete(`${BASE_URL}keystore/${id}`, header);
+}
