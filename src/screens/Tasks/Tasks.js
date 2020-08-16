@@ -7,7 +7,7 @@ import {
   FlatList,
   RefreshControl,
 } from 'react-native';
-import {Button, TextInput} from 'react-native-paper';
+import {Button, TextInput,Paragraph, Dialog, Portal} from 'react-native-paper';
 import CustomModal from './../../components/CustomModal/CustomModal';
 import AppLayout from './../../AppLayout/AppLayout';
 import CustomListItem from './../../components/CustomListItem/CustomListItem';
@@ -26,7 +26,8 @@ export default class Tasks extends Component {
       tasks: [],
       isRefreshing: false,
       loading: false,
-      editId: null
+      editId: null,
+      infoVisible: false
     };
     this.hideModal = this.hideModal.bind(this);
     this.showModal = this.showModal.bind(this);
@@ -40,6 +41,8 @@ export default class Tasks extends Component {
     this.showeditModal = this.showeditModal.bind(this);
     this.hideeditModal = this.hideeditModal.bind(this);
     this.editTask = this.editTask.bind(this);
+    this.showInfo = this.showInfo.bind(this);
+    this.hideInfo = this.hideInfo.bind(this);
   }
 
   componentDidMount = () => {
@@ -76,6 +79,14 @@ export default class Tasks extends Component {
         });
     });
   };
+
+  onSelect = (title, description) => {
+    this.setState({
+        title,
+        description
+    })
+    this.showInfo();
+  }
 
   addTask = () => {
     let body = {
@@ -199,6 +210,18 @@ export default class Tasks extends Component {
     });
   };
 
+  showInfo = () => {
+      this.setState({
+          infoVisible: true
+      })
+  }
+
+  hideInfo = () => {
+      this.setState({
+          infoVisible: false
+      })
+  }
+
   Item = ({id, title, isCompleted, isArchieved, description}) => {
     return (
       <CustomListItem
@@ -212,8 +235,7 @@ export default class Tasks extends Component {
         deleteVisible={true}
         editVisible={true}
         archieveVisible={true}
-        // onSelect={this.onSelect}
-        // open={this.onSelect}
+        onSelect={this.onSelect}
         edit={this.edit}
         delete={this.delete}
       />
