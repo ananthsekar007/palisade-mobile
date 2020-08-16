@@ -246,7 +246,7 @@ export default class Tasks extends Component {
         <CustomModal
           visible={this.state.visible}
           header="Add Task"
-          hideModal={this.hideeditModal}>
+          hideModal={this.hideModal}>
           <View style={styles.inputContainer}>
             <TextInput
               value={this.state.title}
