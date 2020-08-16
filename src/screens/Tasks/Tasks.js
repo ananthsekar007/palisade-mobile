@@ -288,6 +288,51 @@ export default class Tasks extends Component {
             </Button>
           </View>
         </CustomModal>
+        <CustomModal
+        visible={this.state.editVisible}
+        header="Add Task"
+        hideModal={this.hideeditModal}>
+        <View style={styles.inputContainer}>
+          <TextInput
+            value={this.state.title}
+            style={styles.textView}
+            theme={{
+              colors: {
+                primary: '#1C7CC2',
+                underlineColor: 'transparent',
+              },
+            }}
+            mode={'outlined'}
+            label={'Title'}
+            keyboardType={'default'}
+            onChangeText={(title) => this.setState({title})}
+          />
+
+          <TextInput
+            value={this.state.description}
+            style={styles.textView}
+            theme={{
+              colors: {
+                primary: '#1C7CC2',
+                underlineColor: 'transparent',
+              },
+            }}
+            mode={'outlined'}
+            label={'Description'}
+            keyboardType={'default'}
+            onChangeText={(description) => this.setState({description})}
+          />
+          <Button
+            style={styles.button}
+            color={'#1C7CC2'}
+            mode={'contained'}
+            onPress={this.editTask}
+            loading={this.state.editloading}
+            disabled={this.state.editloading}>
+            Edit
+          </Button>
+        </View>
+      </CustomModal>
         <CustomFab iconName={'plus'} onPress={this.showModal} />
       </AppLayout>
     );
