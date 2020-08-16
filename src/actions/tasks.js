@@ -19,3 +19,12 @@ export const addTasks = async (body) => {
 
     return post(`${BASE_URL}tasks`, header, body);
 }
+
+export const deleteTasks = async (id) => {
+    let token = await getAuthToken();
+    const header = new Headers();
+    header.append('Content-Type', 'application/json');
+    header.append('Authorization', `Bearer ${token}`);
+
+    return Delete(`${BASE_URL}tasks/${id}`, header);
+}
