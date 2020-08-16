@@ -23,32 +23,67 @@ export default class Tasks extends Component {
       isCompleted: false,
       isArchieved: false,
       tasks: [],
+      isRefreshing: false
     };
     this.hideModal = this.hideModal.bind(this);
     this.showModal = this.showModal.bind(this);
+    this.initialLoad = this.initialLoad.bind(this);
+    this.loadTasks = this.loadTasks.bind(this);
+    this.onRefresh = this.onRefresh.bind(this);
+    this.showRefresh = this.showRefresh.bind(this);
+    this.hideRefresh = this.hideRefresh.bind(this);
   }
 
   componentDidMount = () => {
+    this.props.navigation.addListener('focus', () => {
+        this.initialLoad();
+      });
+  };
+
+  initialLoad = () => {
+    this.loadTasks();
+  }
+
+  loadTasks = () => {
+    this.showRefresh()
     return new Promise((resolve, reject) => {
-      getAllTasks()
-        .then((json) => {
-          if (json) {
-            resolve(json.data);
-            console.log('json data', json.data);
-            this.setState({
-              tasks: json.data,
-            });
-          } else {
-            this.setState({
-              tasks: [],
-            });
-          }
-        })
-        .finally(() => {
-          resolve();
-        });
+        getAllTasks()
+          .then((json) => {
+            if (json) {
+              resolve(json.data);
+              console.log('json data', json.data);
+              this.setState({
+                tasks: json.data,
+              });
+            } else {
+              this.setState({
+                tasks: [],
+              });
+            }
+          })
+          .finally(() => {
+            this.hideRefresh()
+            resolve();
+          });
+      });
+  };
+
+  onRefresh = () => {
+    this.initialLoad();
+  };
+
+  hideRefresh = () => {
+    this.setState({
+      isRefreshing: false,
     });
   };
+
+  showRefresh = () => {
+    this.setState({
+      isRefreshing: true,
+    });
+  };
+
 
   hideModal = () => {
     this.setState({
@@ -84,12 +119,12 @@ export default class Tasks extends Component {
     return (
       <AppLayout navigation={this.props.navigation} title="Tasks">
         <FlatList
-          //   refreshControl={
-          //     <RefreshControl
-          //       refreshing={this.state.isRefreshing}
-          //       onRefresh={this.onRefresh}
-          //     />
-          //   }
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.isRefreshing}
+                onRefresh={this.onRefresh}
+              />
+            }
           style={{marginTop: 20}}
           data={this.state.tasks}
           renderItem={({item, index}) => {
@@ -98,7 +133,7 @@ export default class Tasks extends Component {
               title: item.title,
             });
           }}
-          keyExtractor={(item) => item.task_id}
+          keyExtractor={(item) => item.task_id.toString()}
         />
         <CustomModal
           visible={this.state.visible}
