@@ -105,6 +105,60 @@ export default class Tasks extends Component {
     });
   };
 
+  delete = (taskId) => {
+    return new Promise((resolve, reject) => {
+        deleteTasks(taskId)
+          .then((json) => {
+            if (json) {
+              resolve(json);
+            }
+          })
+          .finally(() => {
+            this.initialLoad();
+            resolve();
+          });
+      });
+  }
+
+  edit = (id, title, description) => {
+    this.showeditModal();
+    this.setState({
+        title,
+        description,
+        editId: id
+    })
+  }
+
+  editTask = () => {
+    let body = {
+        title: this.state.title,
+        descripiton: this.state.description,
+    }
+    console.log("body to edit", body);
+    this.setState({
+        editloading: true
+    })
+    return new Promise((resolve, reject) => {
+        editTasks(this.state.editId, body)
+          .then((json) => {
+            if (json) {
+              resolve(json);
+            }
+          })
+          .catch(err => {
+              reject();
+          })
+          .finally(() => {
+            this.setState({
+                editloading: false
+            })
+            this.hideeditModal();
+            this.initialLoad();
+            resolve();
+          });
+      });
+  }
+
   onRefresh = () => {
     this.initialLoad();
   };
