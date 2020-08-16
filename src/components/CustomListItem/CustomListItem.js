@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
+import {Text, View, TouchableOpacity, StyleSheet, Clipboard} from 'react-native';
+// import Clipboard from '@react-native-community/clipboard'
 import {List} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -19,6 +20,7 @@ class CustomListItem extends Component {
     this.edit = this.edit.bind(this);
     this.delete = this.delete.bind(this);
     this.moveToTasks = this.moveToTasks.bind(this);
+    this.copyContent = this.copyContent.bind(this);
   }
 
   onSelect = () => {
@@ -41,6 +43,11 @@ class CustomListItem extends Component {
     this.props.delete(this.props.id);
   };
 
+  copyContent = () => {
+    Clipboard.setString(this.props.description)
+    
+  }
+
   render() {
     return (
       <TouchableOpacity
@@ -48,7 +55,9 @@ class CustomListItem extends Component {
           ...styles.listItemContainer,
           ...this.props.listItemContainerStyle,
         }}
-        onPress={this.onSelect}>
+        onPress={this.onSelect}
+        onLongPress={this.copyContent}
+        >
         <View
           style={{...styles.titlesContainer, ...this.props.titlesContainer}}>
           <View

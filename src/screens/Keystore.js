@@ -45,6 +45,7 @@ export default class Tasks extends Component {
     this.editTask = this.editTask.bind(this);
     this.showInfo = this.showInfo.bind(this);
     this.hideInfo = this.hideInfo.bind(this);
+    this.copyContent = this.copyContent.bind(this);
   }
 
   componentDidMount = () => {
@@ -175,6 +176,10 @@ export default class Tasks extends Component {
     });
   };
 
+  copyContent = () => {
+
+  }
+
   onRefresh = () => {
     this.initialLoad();
   };
@@ -241,7 +246,7 @@ export default class Tasks extends Component {
         titleContainerStyle={styles.titleContainerStyle}
         deleteVisible={true}
         editVisible={true}
-        // onSelect={this.onSelect}
+        onSelect={this.onSelect}
         edit={this.edit}
         delete={this.delete}
       />
@@ -368,11 +373,11 @@ export default class Tasks extends Component {
               </Dialog.Content>
               <Dialog.Title>{'Description'}</Dialog.Title>
               <Dialog.Content>
-                <Paragraph>{this.state.description}</Paragraph>
+                <Paragraph>{this.state.content}</Paragraph>
               </Dialog.Content>
               <Dialog.Actions>
-                <Button color="#1C7CC2" >
-                  {'Mark as complete'}
+                <Button color="#1C7CC2" onPress={this.copyContent}>
+                  {'Copy Content'}
                 </Button>
                 <Button color="#1C7CC2" onPress={this.hideInfo}>
                   {'Cancel'}
