@@ -162,6 +162,9 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 19,
+    fontWeight: '700',
+    marginLeft: 10,
+    fontFamily: 'sans-serif-condensed',
   },
 });
 
