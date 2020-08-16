@@ -49,7 +49,7 @@ CustomFab.propTypes = {
         position: 'absolute',
         margin: 16,
         right: 0,
-        bottom: -(HEIGHT - 150),
+        bottom: 0,
         backgroundColor: '#1C7CC2',
         elevation: 10
     },
