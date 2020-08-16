@@ -28,3 +28,12 @@ export const deleteKeys = async (id) => {
 
     return Delete(`${BASE_URL}keystore/${id}`, header);
 }
+
+export const editKeys = async (id, body) => {
+    let token = await getAuthToken();
+    const header = new Headers();
+    header.append('Content-Type', 'application/json');
+    header.append('Authorization', `Bearer ${token}`);
+
+    return put(`${BASE_URL}keystore/${id}`, header, body )
+}
