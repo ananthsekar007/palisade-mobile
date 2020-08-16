@@ -2,8 +2,7 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
 import {List} from 'react-native-paper';
-import Counter from './../Counter/Counter';
-import {RNMCI} from './../../components/RNVI';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 /**
  * CustomListItem Component
@@ -75,37 +74,34 @@ class CustomListItem extends Component {
         <TouchableOpacity
           style={{...styles.iconsContainer, ...this.props.iconsContainerStyle}}>
           {this.props.archieveVisible && (
-            <RNMCI
-              name={'folder-open'}
-              onPress={this.archieve}
-              style={{...styles.icon, ...this.props.iconStyle}}
-              iconContainerStyle={{
-                ...styles.iconContainerStyle,
-                ...this.props.iconContainerStyle,
-              }}
-            />
+            <TouchableOpacity>
+              <Icon
+                name={'archive'}
+                size={25}
+                color={'#1C7CC2'}
+                style={styles.Icon}
+              />
+            </TouchableOpacity>
           )}
           {this.props.editVisible && (
-            <RNMCI
-              name={'pencil'}
-              onPress={this.edit}
-              style={{...styles.icon, ...this.props.iconStyle}}
-              iconContainerStyle={{
-                ...styles.iconContainerStyle,
-                ...this.props.iconContainerStyle,
-              }}
-            />
+            <TouchableOpacity>
+              <Icon
+                name={'edit'}
+                size={30}
+                color={'#1C7CC2'}
+                style={styles.Icon}
+              />
+            </TouchableOpacity>
           )}
           {this.props.deleteVisible && (
-            <RNMCI
-              name={'close'}
-              onPress={this.delete}
-              style={{...styles.icon, ...this.props.iconStyle}}
-              iconContainerStyle={{
-                ...styles.iconContainerStyle,
-                ...this.props.iconContainerStyle,
-              }}
-            />
+            <TouchableOpacity>
+              <Icon
+                name={'trash'}
+                size={25}
+                color={'red'}
+                style={styles.Icon}
+              />
+            </TouchableOpacity>
           )}
         </TouchableOpacity>
       </TouchableOpacity>
@@ -120,15 +116,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     height: 60,
-    margin: 10,
+    margin: 15,
+    marginTop: 10,
     elevation: 10,
-    padding: 5
+    padding: 10,
   },
   iconsContainer: {
     flexDirection: 'row',
+    padding: 10,
   },
-  icon: {
-    margin: 0,
+  Icon: {
+    margin: 5,
   },
   title: {
     fontSize: 23,
