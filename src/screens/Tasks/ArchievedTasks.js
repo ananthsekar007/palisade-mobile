@@ -199,7 +199,7 @@ export default class Tasks extends Component {
 
   render() {
     return (
-      <AppLayout navigation={this.props.navigation} title="Archieved Tasks">
+      <AppLayout navigation={this.props.navigation} title="Archived Tasks">
         <FlatList
           refreshControl={
             <RefreshControl
