@@ -20,11 +20,13 @@ export default class Tasks extends Component {
       visible: false,
       title: '',
       description: '',
+      editVisible : false,
       isCompleted: false,
       isArchieved: false,
       tasks: [],
       isRefreshing: false,
       loading: false,
+      editId: null
     };
     this.hideModal = this.hideModal.bind(this);
     this.showModal = this.showModal.bind(this);
@@ -34,9 +36,14 @@ export default class Tasks extends Component {
     this.showRefresh = this.showRefresh.bind(this);
     this.hideRefresh = this.hideRefresh.bind(this);
     this.addTask = this.addTask.bind(this);
+    this.delete = this.delete.bind(this);
+    this.showeditModal = this.showeditModal.bind(this);
+    this.hideeditModal = this.hideeditModal.bind(this);
+    this.editTask = this.editTask.bind(this);
   }
 
   componentDidMount = () => {
+    this.initialLoad();
     this.props.navigation.addListener('focus', () => {
       this.initialLoad();
     });
@@ -126,11 +133,26 @@ export default class Tasks extends Component {
     });
   };
 
-  Item = ({id, title}) => {
+  hideeditModal = () => {
+    this.setState({
+      editVisible: false,
+    });
+  };
+
+  showeditModal = () => {
+    this.setState({
+        editVisible: true,
+    });
+  };
+
+  Item = ({id, title, isCompleted, isArchieved, description}) => {
     return (
       <CustomListItem
         id={id}
         title={title}
+        isCompleted={isCompleted}
+        isArchieved={isArchieved}
+        description={description}
         listItemContainerStyle={{backgroundColor: '#ffff'}}
         titleContainerStyle={styles.titleContainerStyle}
         deleteVisible={true}
@@ -138,8 +160,8 @@ export default class Tasks extends Component {
         archieveVisible={true}
         // onSelect={this.onSelect}
         // open={this.onSelect}
-        // edit={this.edit}
-        // delete={this.delete}
+        edit={this.edit}
+        delete={this.delete}
       />
     );
   };
@@ -160,6 +182,9 @@ export default class Tasks extends Component {
             return this.Item({
               id: item.task_id,
               title: item.title,
+              isCompleted: item.isCompleted,
+              isArchieved: item.isArchieved,
+              description: item.description
             });
           }}
           keyExtractor={(item) => item.task_id.toString()}
@@ -167,7 +192,7 @@ export default class Tasks extends Component {
         <CustomModal
           visible={this.state.visible}
           header="Add Task"
-          hideModal={this.hideModal}>
+          hideModal={this.hideeditModal}>
           <View style={styles.inputContainer}>
             <TextInput
               value={this.state.title}
