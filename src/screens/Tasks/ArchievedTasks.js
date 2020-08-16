@@ -12,9 +12,9 @@ import CustomModal from './../../components/CustomModal/CustomModal';
 import AppLayout from './../../AppLayout/AppLayout';
 import CustomListItem from './../../components/CustomListItem/CustomListItem';
 import {
-    getArchievedTasks
+    getArchievedTasks,
+    editTasks
 } from './../../actions/tasks';
-import CustomFab from './../../components/Customfab/CustomFab';
 export default class Tasks extends Component {
   constructor(props) {
     super(props);
@@ -38,15 +38,11 @@ export default class Tasks extends Component {
     this.onRefresh = this.onRefresh.bind(this);
     this.showRefresh = this.showRefresh.bind(this);
     this.hideRefresh = this.hideRefresh.bind(this);
-    this.addTask = this.addTask.bind(this);
     this.delete = this.delete.bind(this);
-    this.showeditModal = this.showeditModal.bind(this);
-    this.hideeditModal = this.hideeditModal.bind(this);
-    this.editTask = this.editTask.bind(this);
+    this.moveToTasks = this.moveToTasks.bind(this);
     this.showInfo = this.showInfo.bind(this);
     this.hideInfo = this.hideInfo.bind(this);
-    this.archieve = this.archieve.bind(this);
-    this.complete = this.complete.bind(this);
+
   }
 
   componentDidMount = () => {
@@ -95,34 +91,6 @@ export default class Tasks extends Component {
     this.showInfo();
   };
 
-  addTask = () => {
-    let body = {
-      title: this.state.title,
-      description: this.state.description,
-    };
-    this.setState({
-      loading: true,
-    });
-    return new Promise((resolve, reject) => {
-      addTasks(body)
-        .then((json) => {
-          if (json) {
-            resolve(json.data);
-          }
-        })
-        .finally(() => {
-          this.setState({
-            loading: false,
-            title: '',
-            description: '',
-          });
-          this.hideModal();
-          this.initialLoad();
-          resolve();
-        });
-    });
-  };
-
   delete = (taskId) => {
     return new Promise((resolve, reject) => {
       deleteTasks(taskId)
@@ -138,51 +106,32 @@ export default class Tasks extends Component {
     });
   };
 
-  edit = (id, title, description) => {
-    this.showeditModal();
-    this.setState({
-      title,
-      description,
-      editId: id,
-    });
-  };
-
-  editTask = () => {
+  dialogMove = () => {
     let body = {
-      title: this.state.title,
-      descripiton: this.state.description,
-    };
-    console.log('body to edit', body);
-    this.setState({
-      editloading: true,
-    });
-    return new Promise((resolve, reject) => {
-      editTasks(this.state.editId, body)
-        .then((json) => {
-          if (json) {
-            resolve(json);
-          }
-        })
-        .catch((err) => {
-          reject();
-        })
-        .finally(() => {
-          this.setState({
-            editloading: false,
-            title: '',
-            descripiton: ''
+        isCompleted: this.state.isCompleted,
+        isArchieved: !this.state.isArchieved
+      };
+      return new Promise((resolve, reject) => {
+        editTasks(this.state.editId, body)
+          .then((json) => {
+            if (json) {
+              resolve(json);
+            }
+          })
+          .catch((err) => {
+            reject();
+          })
+          .finally(() => {
+            this.initialLoad();
+            resolve();
           });
-          this.hideeditModal();
-          this.initialLoad();
-          resolve();
-        });
-    });
-  };
+      });
+  }
 
-  archieve = (id, isCompleted, isArchieved) => {
+  moveToTasks = (id, isCompleted, isArchieved) => {
     let body = {
-      isCompleted: !!isCompleted,
-      isArchieved: !isArchieved,
+      isCompleted: isCompleted,
+      isArchieved: !isArchieved
     };
     return new Promise((resolve, reject) => {
       editTasks(id, body)
@@ -195,29 +144,6 @@ export default class Tasks extends Component {
           reject();
         })
         .finally(() => {
-          this.initialLoad();
-          resolve();
-        });
-    });
-  };
-
-  complete = () => {
-    let body = {
-      isCompleted: !this.state.isCompleted,
-      isArchieved: !!this.state.isArchieved,
-    };
-    return new Promise((resolve, reject) => {
-      editTasks(this.state.editId, body)
-        .then((json) => {
-          if (json) {
-            resolve(json);
-          }
-        })
-        .catch((err) => {
-          reject();
-        })
-        .finally(() => {
-          this.hideInfo();
           this.initialLoad();
           resolve();
         });
@@ -254,18 +180,6 @@ export default class Tasks extends Component {
     });
   };
 
-  hideeditModal = () => {
-    this.setState({
-      editVisible: false,
-    });
-  };
-
-  showeditModal = () => {
-    this.setState({
-      editVisible: true,
-    });
-  };
-
   showInfo = () => {
     this.setState({
       infoVisible: true,
@@ -289,11 +203,10 @@ export default class Tasks extends Component {
         listItemContainerStyle={{backgroundColor: '#ffff'}}
         titleContainerStyle={styles.titleContainerStyle}
         deleteVisible={true}
-        editVisible={true}
-        archieveVisible={true}
+        editVisible={false}
+        revertVisible={true}
         onSelect={this.onSelect}
-        archieve={this.archieve}
-        edit={this.edit}
+        moveToTasks={this.moveToTasks}
         delete={this.delete}
       />
     );
@@ -424,8 +337,8 @@ export default class Tasks extends Component {
                 <Paragraph>{this.state.description}</Paragraph>
               </Dialog.Content>
               <Dialog.Actions>
-                <Button color="#1C7CC2" onPress={this.complete}>
-                  {'Mark as complete'}
+                <Button color="#1C7CC2" onPress={this.moveToTasks}>
+                  {'Move to Tasks'}
                 </Button>
                 <Button color="#1C7CC2" onPress={this.hideInfo}>
                   {'Cancel'}
