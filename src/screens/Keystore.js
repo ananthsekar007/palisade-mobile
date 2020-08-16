@@ -299,7 +299,7 @@ export default class Tasks extends Component {
 
   render() {
     return (
-      <AppLayout navigation={this.props.navigation} title="Tasks">
+      <AppLayout navigation={this.props.navigation} title="Key Store">
         <FlatList
           refreshControl={
             <RefreshControl
@@ -348,7 +348,7 @@ export default class Tasks extends Component {
                 },
               }}
               mode={'outlined'}
-              label={'Description'}
+              label={'Content'}
               keyboardType={'default'}
               onChangeText={(content) => this.setState({content})}
             />
@@ -393,9 +393,9 @@ export default class Tasks extends Component {
                 },
               }}
               mode={'outlined'}
-              label={'Description'}
+              label={'Content'}
               keyboardType={'default'}
-              onChangeText={(description) => this.setState({description})}
+              onChangeText={(content) => this.setState({content})}
             />
             <Button
               style={styles.button}
