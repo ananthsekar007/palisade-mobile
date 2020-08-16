@@ -121,7 +121,7 @@ export default class Tasks extends Component {
 
   delete = (taskId) => {
     return new Promise((resolve, reject) => {
-      deleteTasks(taskId)
+      deleteKeys(taskId)
         .then((json) => {
           if (json) {
             resolve(json);
@@ -153,7 +153,7 @@ export default class Tasks extends Component {
       editloading: true,
     });
     return new Promise((resolve, reject) => {
-      editTasks(this.state.editId, body)
+      editKeys(this.state.editId, body)
         .then((json) => {
           if (json) {
             resolve(json);
