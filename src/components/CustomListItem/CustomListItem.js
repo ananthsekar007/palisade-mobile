@@ -29,7 +29,7 @@ class CustomListItem extends Component {
   };
 
   edit = () => {
-    this.props.edit(this.props.id);
+    this.props.edit(this.props.id, this.props.title, this.props.description);
   };
 
   delete = () => {
@@ -74,7 +74,7 @@ class CustomListItem extends Component {
         <TouchableOpacity
           style={{...styles.iconsContainer, ...this.props.iconsContainerStyle}}>
           {this.props.archieveVisible && (
-            <TouchableOpacity>
+            <TouchableOpacity >
               <Icon
                 name={'archive'}
                 size={25}
@@ -84,7 +84,7 @@ class CustomListItem extends Component {
             </TouchableOpacity>
           )}
           {this.props.editVisible && (
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this.edit}>
               <Icon
                 name={'edit'}
                 size={30}
@@ -94,7 +94,7 @@ class CustomListItem extends Component {
             </TouchableOpacity>
           )}
           {this.props.deleteVisible && (
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this.delete}>
               <Icon
                 name={'trash'}
                 size={25}
