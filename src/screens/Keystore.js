@@ -241,10 +241,9 @@ export default class Tasks extends Component {
         titleContainerStyle={styles.titleContainerStyle}
         deleteVisible={true}
         editVisible={true}
-        // archieveVisible={true}
         // onSelect={this.onSelect}
         // edit={this.edit}
-        // delete={this.delete}
+        delete={this.delete}
       />
     );
   };
