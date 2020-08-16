@@ -172,6 +172,8 @@ export default class Tasks extends Component {
         .finally(() => {
           this.setState({
             editloading: false,
+            title: '',
+            descripiton: ''
           });
           this.hideeditModal();
           this.initialLoad();

@@ -12,7 +12,8 @@ import CustomModal from './../../components/CustomModal/CustomModal';
 import AppLayout from './../../AppLayout/AppLayout';
 import CustomListItem from './../../components/CustomListItem/CustomListItem';
 import {
-  getCompletedTasks
+  getCompletedTasks,
+  deleteTasks
 } from './../../actions/tasks';
 import CustomFab from './../../components/Customfab/CustomFab';
 export default class Tasks extends Component {
@@ -28,11 +29,9 @@ export default class Tasks extends Component {
       tasks: [],
       isRefreshing: false,
       loading: false,
-      editId: null,
+      deleteId: null,
       infoVisible: false,
     };
-    this.hideModal = this.hideModal.bind(this);
-    this.showModal = this.showModal.bind(this);
     this.initialLoad = this.initialLoad.bind(this);
     this.loadTasks = this.loadTasks.bind(this);
     this.onRefresh = this.onRefresh.bind(this);
@@ -41,8 +40,7 @@ export default class Tasks extends Component {
     this.delete = this.delete.bind(this);
     this.showInfo = this.showInfo.bind(this);
     this.hideInfo = this.hideInfo.bind(this);
-    this.archieve = this.archieve.bind(this);
-    this.complete = this.complete.bind(this);
+    this.modalDelete = this.modalDelete.bind(this);
   }
 
   componentDidMount = () => {
@@ -86,10 +84,26 @@ export default class Tasks extends Component {
       description,
       isArchieved,
       isCompleted,
-      editId: id,
+      deleteId: id,
     });
     this.showInfo();
   };
+
+  modalDelete = () => {
+    return new Promise((resolve, reject) => {
+        deleteTasks(this.state.deleteId)
+          .then((json) => {
+            if (json) {
+              resolve(json);
+            }
+          })
+          .finally(() => {
+            this.hideInfo();
+            this.initialLoad();
+            resolve();
+          });
+      });
+  }
 
   delete = (taskId) => {
     return new Promise((resolve, reject) => {
@@ -145,51 +159,6 @@ export default class Tasks extends Component {
     });
   };
 
-  archieve = (id, isCompleted, isArchieved) => {
-    let body = {
-      isCompleted: !!isCompleted,
-      isArchieved: !isArchieved,
-    };
-    return new Promise((resolve, reject) => {
-      editTasks(id, body)
-        .then((json) => {
-          if (json) {
-            resolve(json);
-          }
-        })
-        .catch((err) => {
-          reject();
-        })
-        .finally(() => {
-          this.initialLoad();
-          resolve();
-        });
-    });
-  };
-
-  complete = () => {
-    let body = {
-      isCompleted: !this.state.isCompleted,
-      isArchieved: !!this.state.isArchieved,
-    };
-    return new Promise((resolve, reject) => {
-      editTasks(this.state.editId, body)
-        .then((json) => {
-          if (json) {
-            resolve(json);
-          }
-        })
-        .catch((err) => {
-          reject();
-        })
-        .finally(() => {
-          this.hideInfo();
-          this.initialLoad();
-          resolve();
-        });
-    });
-  };
-
   onRefresh = () => {
     this.initialLoad();
   };
@@ -203,30 +172,6 @@ export default class Tasks extends Component {
   showRefresh = () => {
     this.setState({
       isRefreshing: true,
-    });
-  };
-
-  hideModal = () => {
-    this.setState({
-      visible: false,
-    });
-  };
-
-  showModal = () => {
-    this.setState({
-      visible: true,
-    });
-  };
-
-  hideeditModal = () => {
-    this.setState({
-      editVisible: false,
-    });
-  };
-
-  showeditModal = () => {
-    this.setState({
-      editVisible: true,
     });
   };
 
@@ -254,6 +199,7 @@ export default class Tasks extends Component {
         titleContainerStyle={styles.titleContainerStyle}
         deleteVisible={true}
         editVisible={false}
+        archieveVisible={false}
         onSelect={this.onSelect}
         delete={this.delete}
       />
@@ -340,8 +286,8 @@ export default class Tasks extends Component {
                 <Paragraph>{this.state.description}</Paragraph>
               </Dialog.Content>
               <Dialog.Actions>
-                <Button color="#1C7CC2" onPress={this.complete}>
-                  {'Mark as complete'}
+                <Button color="#1C7CC2" onPress={this.modalDelete}>
+                  {'Delete'}
                 </Button>
                 <Button color="#1C7CC2" onPress={this.hideInfo}>
                   {'Cancel'}
