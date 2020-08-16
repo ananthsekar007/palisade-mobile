@@ -11,10 +11,9 @@ export default class Keystore extends Component {
 
   render() {
     return (
-      <View>
-      <AppLayout navigation={this.props.navigation} title="Key Store" />
-      <CustomFab   iconName={'plus'} />
-      </View>
+      <AppLayout navigation={this.props.navigation} title="Key Store">
+        <CustomFab iconName={'plus'} />
+      </AppLayout>
     );
   }
 }

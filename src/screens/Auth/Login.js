@@ -8,7 +8,7 @@ import {
   Image,
   Dimensions,
 } from 'react-native';
-import {login, setAuthToken} from './../../actions/auth';
+import {login, setAuthToken, setUserInfo} from './../../actions/auth';
 import {TextInput, Button} from 'react-native-paper';
 import logo from './../../../assets/images/palisade.png';
 
@@ -40,6 +40,7 @@ export default class Login extends React.Component {
             if (json) {
               console.log(json);
               setAuthToken(json.access_token);
+              setUserInfo(JSON.stringify(json.user));
               this.props.navigation.navigate('Home');
             }
           })

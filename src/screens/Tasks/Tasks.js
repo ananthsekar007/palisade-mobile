@@ -12,11 +12,9 @@ export default class Tasks extends Component {
 
   render() {
     return (
-      <View>
         <AppLayout navigation={this.props.navigation} title="Tasks">
           <CustomFab iconName={'plus'} />
         </AppLayout>
-      </View>
     );
   }
 }
