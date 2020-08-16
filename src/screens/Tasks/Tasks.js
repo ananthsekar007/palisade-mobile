@@ -1,14 +1,18 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import { Modal, Portal, Button } from 'react-native-paper';
-import CustomModal from "./../../components/CustomModal/CustomModal";
+import {Button, TextInput} from 'react-native-paper';
+import CustomModal from './../../components/CustomModal/CustomModal';
 import AppLayout from './../../AppLayout/AppLayout';
 import CustomFab from './../../components/Customfab/CustomFab';
 export default class Tasks extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        visible: false
+      visible: false,
+      title: '',
+      description: '',
+      isCompleted: false,
+      isArchieved: false,
     };
     this.hideModal = this.hideModal.bind(this);
     this.showModal = this.showModal.bind(this);
@@ -16,25 +20,77 @@ export default class Tasks extends Component {
 
   hideModal = () => {
     this.setState({
-        visible: false
-    })
-  }
+      visible: false,
+    });
+  };
 
   showModal = () => {
     this.setState({
-        visible: true
-    })
-  }
+      visible: true,
+    });
+  };
 
   render() {
     return (
-        <AppLayout navigation={this.props.navigation} title="Tasks">
-          <CustomModal visible={this.state.visible} header="Add Task" hideModal={this.hideModal}>
-          </CustomModal>
-          <CustomFab iconName={'plus'} onPress={this.showModal} />
-        </AppLayout>
+      <AppLayout navigation={this.props.navigation} title="Tasks">
+        <CustomModal
+          visible={this.state.visible}
+          header="Add Task"
+          hideModal={this.hideModal}>
+          <View style={styles.inputContainer}>
+            <TextInput
+              value={this.state.title}
+              style={styles.textView}
+              theme={{
+                colors: {
+                  primary: '#1C7CC2',
+                  underlineColor: 'transparent',
+                },
+              }}
+              mode={'outlined'}
+              label={'Title'}
+              keyboardType={'default'}
+              onChangeText={(title) => this.setState({title})}
+            />
+            <TextInput
+              value={this.state.description}
+              style={styles.textView}
+              theme={{
+                colors: {
+                  primary: '#1C7CC2',
+                  underlineColor: 'transparent',
+                },
+              }}
+              mode={'outlined'}
+              label={'Description'}
+              keyboardType={'default'}
+              onChangeText={(description) => this.setState({description})}
+            />
+            <Button
+                style={styles.button}
+                color={'#1C7CC2'}
+                mode={"contained"}
+                >
+              Add
+            </Button>
+          </View>
+        </CustomModal>
+        <CustomFab iconName={'plus'} onPress={this.showModal} />
+      </AppLayout>
     );
   }
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  inputContainer: {
+    marginTop: 30,
+    margin: 10,
+  },
+  textView: {
+    marginBottom: 20,
+  },
+  button: {
+      margin: 20,
+      borderRadius: 20
+  },
+});
