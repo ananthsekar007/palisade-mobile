@@ -28,3 +28,12 @@ export const deleteTasks = async (id) => {
 
     return Delete(`${BASE_URL}tasks/${id}`, header);
 }
+
+export const editTasks = async (id, body) => {
+    let token = await getAuthToken();
+    const header = new Headers();
+    header.append('Content-Type', 'application/json');
+    header.append('Authorization', `Bearer ${token}`);
+
+    return put(`${BASE_URL}tasks/${id}`, header, body )
+}
