@@ -129,9 +129,12 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   title: {
-    fontSize: 23,
+    fontSize: 20,
     flex: 1,
     textAlignVertical: 'center',
+    fontWeight: '900',
+    marginLeft: 10,
+    fontFamily: 'sans-serif-condensed',
   },
   titleContainer: {
     flex: 0.96,
