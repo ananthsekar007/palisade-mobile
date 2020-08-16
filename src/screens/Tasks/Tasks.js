@@ -11,7 +11,7 @@ import {Button, TextInput} from 'react-native-paper';
 import CustomModal from './../../components/CustomModal/CustomModal';
 import AppLayout from './../../AppLayout/AppLayout';
 import CustomListItem from './../../components/CustomListItem/CustomListItem';
-import {getAllTasks, addTasks} from './../../actions/tasks';
+import {getAllTasks, addTasks, deleteTasks, editTasks} from './../../actions/tasks';
 import CustomFab from './../../components/Customfab/CustomFab';
 export default class Tasks extends Component {
   constructor(props) {
