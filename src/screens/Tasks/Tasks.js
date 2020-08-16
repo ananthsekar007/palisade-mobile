@@ -355,6 +355,23 @@ export default class Tasks extends Component {
           </Button>
         </View>
       </CustomModal>
+      <View>
+        <Portal>
+          <Dialog visible={this.state.infoVisible} onDismiss={this.hideInfo}>
+            <Dialog.Title>{'Task Title'}</Dialog.Title>
+            <Dialog.Content>
+              <Paragraph>{this.state.title}</Paragraph>
+            </Dialog.Content>
+            <Dialog.Title>{'Description'}</Dialog.Title>
+            <Dialog.Content>
+              <Paragraph>{this.state.description}</Paragraph>
+            </Dialog.Content>
+            <Dialog.Actions>
+              <Button color="#1C7CC2" onPress={this.hideInfo}>{'Cancel'}</Button>
+            </Dialog.Actions>
+          </Dialog>
+        </Portal>
+      </View>
         <CustomFab iconName={'plus'} onPress={this.showModal} />
       </AppLayout>
     );
