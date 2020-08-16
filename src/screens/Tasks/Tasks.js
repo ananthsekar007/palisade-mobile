@@ -11,7 +11,7 @@ import {Button, TextInput} from 'react-native-paper';
 import CustomModal from './../../components/CustomModal/CustomModal';
 import AppLayout from './../../AppLayout/AppLayout';
 import CustomListItem from './../../components/CustomListItem/CustomListItem';
-import {getAllTasks} from './../../actions/tasks';
+import {getAllTasks, addTasks} from './../../actions/tasks';
 import CustomFab from './../../components/Customfab/CustomFab';
 export default class Tasks extends Component {
   constructor(props) {
@@ -23,7 +23,8 @@ export default class Tasks extends Component {
       isCompleted: false,
       isArchieved: false,
       tasks: [],
-      isRefreshing: false
+      isRefreshing: false,
+      loading: false,
     };
     this.hideModal = this.hideModal.bind(this);
     this.showModal = this.showModal.bind(this);
@@ -32,40 +33,69 @@ export default class Tasks extends Component {
     this.onRefresh = this.onRefresh.bind(this);
     this.showRefresh = this.showRefresh.bind(this);
     this.hideRefresh = this.hideRefresh.bind(this);
+    this.addTask = this.addTask.bind(this);
   }
 
   componentDidMount = () => {
     this.props.navigation.addListener('focus', () => {
-        this.initialLoad();
-      });
+      this.initialLoad();
+    });
   };
 
   initialLoad = () => {
     this.loadTasks();
-  }
+  };
 
   loadTasks = () => {
-    this.showRefresh()
+    this.showRefresh();
     return new Promise((resolve, reject) => {
-        getAllTasks()
-          .then((json) => {
-            if (json) {
-              resolve(json.data);
-              console.log('json data', json.data);
-              this.setState({
-                tasks: json.data,
-              });
-            } else {
-              this.setState({
-                tasks: [],
-              });
-            }
-          })
-          .finally(() => {
-            this.hideRefresh()
-            resolve();
-          });
-      });
+      getAllTasks()
+        .then((json) => {
+          if (json) {
+            resolve(json.data);
+            console.log('json data', json.data);
+            this.setState({
+              tasks: json.data,
+            });
+          } else {
+            this.setState({
+              tasks: [],
+            });
+          }
+        })
+        .finally(() => {
+          this.hideRefresh();
+          resolve();
+        });
+    });
+  };
+
+  addTask = () => {
+    let body = {
+      title: this.state.title,
+      description: this.state.description,
+    };
+    this.setState({
+        loading: true
+    })
+    return new Promise((resolve, reject) => {
+      addTasks(body)
+        .then((json) => {
+          if (json) {
+            resolve(json.data);
+          }
+        })
+        .finally(() => {
+            this.setState({
+                loading: false,
+                title: '',
+                description: ''
+            })
+            this.hideModal();
+          this.initialLoad();
+          resolve();
+        });
+    });
   };
 
   onRefresh = () => {
@@ -83,7 +113,6 @@ export default class Tasks extends Component {
       isRefreshing: true,
     });
   };
-
 
   hideModal = () => {
     this.setState({
@@ -119,12 +148,12 @@ export default class Tasks extends Component {
     return (
       <AppLayout navigation={this.props.navigation} title="Tasks">
         <FlatList
-            refreshControl={
-              <RefreshControl
-                refreshing={this.state.isRefreshing}
-                onRefresh={this.onRefresh}
-              />
-            }
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.isRefreshing}
+              onRefresh={this.onRefresh}
+            />
+          }
           style={{marginTop: 20}}
           data={this.state.tasks}
           renderItem={({item, index}) => {
@@ -169,7 +198,13 @@ export default class Tasks extends Component {
               keyboardType={'default'}
               onChangeText={(description) => this.setState({description})}
             />
-            <Button style={styles.button} color={'#1C7CC2'} mode={'contained'}>
+            <Button
+              style={styles.button}
+              color={'#1C7CC2'}
+              mode={'contained'}
+              onPress={this.addTask}
+              loading={this.state.loading}
+              disabled={this.state.loading}>
               Add
             </Button>
           </View>

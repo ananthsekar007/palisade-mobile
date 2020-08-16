@@ -10,3 +10,12 @@ export const getAllTasks = async () => {
 
     return get(`${BASE_URL}tasks`, header);
 }
+
+export const addTasks = async (body) => {
+    let token = await getAuthToken();
+    const header = new Headers();
+    header.append('Content-Type', 'application/json');
+    header.append('Authorization', `Bearer ${token}`);
+
+    return post(`${BASE_URL}tasks`, header, body);
+}
