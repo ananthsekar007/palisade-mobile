@@ -37,3 +37,12 @@ export const editTasks = async (id, body) => {
 
     return put(`${BASE_URL}tasks/${id}`, header, body )
 }
+
+export const getCompletedTasks = async () => {
+    let token = await getAuthToken();
+    const header = new Headers();
+    header.append('Content-Type', 'application/json');
+    header.append('Authorization', `Bearer ${token}`);
+
+    return get(`${BASE_URL}completedtasks`, header);
+}
