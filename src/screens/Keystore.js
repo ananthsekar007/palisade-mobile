@@ -34,7 +34,7 @@ export default class Tasks extends Component {
     this.hideModal = this.hideModal.bind(this);
     this.showModal = this.showModal.bind(this);
     this.initialLoad = this.initialLoad.bind(this);
-    this.loadTasks = this.loadTasks.bind(this);
+    this.loadKeys = this.loadKeys.bind(this);
     this.onRefresh = this.onRefresh.bind(this);
     this.showRefresh = this.showRefresh.bind(this);
     this.hideRefresh = this.hideRefresh.bind(this);
@@ -55,10 +55,10 @@ export default class Tasks extends Component {
   };
 
   initialLoad = () => {
-    this.loadTasks();
+    this.loadKeys();
   };
 
-  loadTasks = () => {
+  loadKeys = () => {
     this.showRefresh();
     return new Promise((resolve, reject) => {
       getAllKeys()
