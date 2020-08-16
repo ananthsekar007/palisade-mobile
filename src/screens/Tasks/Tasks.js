@@ -1,9 +1,17 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  FlatList,
+  RefreshControl,
+} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 import CustomModal from './../../components/CustomModal/CustomModal';
 import AppLayout from './../../AppLayout/AppLayout';
-import { getAllTasks } from "./../../actions/tasks";
+import CustomListItem from './../../components/CustomListItem/CustomListItem';
+import {getAllTasks} from './../../actions/tasks';
 import CustomFab from './../../components/Customfab/CustomFab';
 export default class Tasks extends Component {
   constructor(props) {
@@ -14,7 +22,7 @@ export default class Tasks extends Component {
       description: '',
       isCompleted: false,
       isArchieved: false,
-      tasks: []
+      tasks: [],
     };
     this.hideModal = this.hideModal.bind(this);
     this.showModal = this.showModal.bind(this);
@@ -22,26 +30,25 @@ export default class Tasks extends Component {
 
   componentDidMount = () => {
     return new Promise((resolve, reject) => {
-        getAllTasks()
-        .then(json => {
+      getAllTasks()
+        .then((json) => {
           if (json) {
-            resolve(json.data)
-            console.log("json data", json.data)
+            resolve(json.data);
+            console.log('json data', json.data);
             this.setState({
-                tasks: json.data
-            })
+              tasks: json.data,
+            });
           } else {
-              this.setState({
-                  tasks: []
-              })
+            this.setState({
+              tasks: [],
+            });
           }
         })
         .finally(() => {
           resolve();
         });
-      })
-
-  }
+    });
+  };
 
   hideModal = () => {
     this.setState({
@@ -55,9 +62,44 @@ export default class Tasks extends Component {
     });
   };
 
+  Item = ({id, title}) => {
+    return (
+      <CustomListItem
+        id={id}
+        title={title}
+        listItemContainerStyle={{backgroundColor: '#ffff'}}
+        titleContainerStyle={styles.titleContainerStyle}
+        deleteVisible={true}
+        editVisible={true}
+        archieveVisible={true}
+        // onSelect={this.onSelect}
+        // open={this.onSelect}
+        // edit={this.edit}
+        // delete={this.delete}
+      />
+    );
+  };
+
   render() {
     return (
       <AppLayout navigation={this.props.navigation} title="Tasks">
+        <FlatList
+          //   refreshControl={
+          //     <RefreshControl
+          //       refreshing={this.state.isRefreshing}
+          //       onRefresh={this.onRefresh}
+          //     />
+          //   }
+          style={{marginTop: 20}}
+          data={this.state.tasks}
+          renderItem={({item, index}) => {
+            return this.Item({
+              id: item.task_id,
+              title: item.title,
+            });
+          }}
+          keyExtractor={(item) => item.task_id}
+        />
         <CustomModal
           visible={this.state.visible}
           header="Add Task"
@@ -77,6 +119,7 @@ export default class Tasks extends Component {
               keyboardType={'default'}
               onChangeText={(title) => this.setState({title})}
             />
+
             <TextInput
               value={this.state.description}
               style={styles.textView}
@@ -91,11 +134,7 @@ export default class Tasks extends Component {
               keyboardType={'default'}
               onChangeText={(description) => this.setState({description})}
             />
-            <Button
-                style={styles.button}
-                color={'#1C7CC2'}
-                mode={"contained"}
-                >
+            <Button style={styles.button} color={'#1C7CC2'} mode={'contained'}>
               Add
             </Button>
           </View>
@@ -115,7 +154,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-      margin: 30,
-      borderRadius: 20
+    margin: 30,
+    borderRadius: 20,
   },
 });
