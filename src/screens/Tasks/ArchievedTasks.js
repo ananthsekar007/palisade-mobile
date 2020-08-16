@@ -121,6 +121,7 @@ export default class Tasks extends Component {
             reject();
           })
           .finally(() => {
+            this.hideInfo();
             this.initialLoad();
             resolve();
           });
@@ -232,7 +233,7 @@ export default class Tasks extends Component {
                 <Paragraph>{this.state.description}</Paragraph>
               </Dialog.Content>
               <Dialog.Actions>
-                <Button color="#1C7CC2" onPress={this.moveToTasks}>
+                <Button color="#1C7CC2" onPress={this.dialogMove}>
                   {'Move to Tasks'}
                 </Button>
                 <Button color="#1C7CC2" onPress={this.hideInfo}>

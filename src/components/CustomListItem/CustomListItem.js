@@ -46,7 +46,7 @@ class CustomListItem extends Component {
 
   copyContent = () => {
     Clipboard.setString(this.props.description)
-    Toast.show('Coppied to Clipboard', Toast.LONG)
+    Toast.show('Copied to Clipboard', Toast.LONG)
   }
 
   render() {
