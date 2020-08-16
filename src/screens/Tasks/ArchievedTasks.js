@@ -13,7 +13,8 @@ import AppLayout from './../../AppLayout/AppLayout';
 import CustomListItem from './../../components/CustomListItem/CustomListItem';
 import {
     getArchievedTasks,
-    editTasks
+    editTasks,
+    deleteTasks
 } from './../../actions/tasks';
 export default class Tasks extends Component {
   constructor(props) {
@@ -31,8 +32,6 @@ export default class Tasks extends Component {
       editId: null,
       infoVisible: false,
     };
-    this.hideModal = this.hideModal.bind(this);
-    this.showModal = this.showModal.bind(this);
     this.initialLoad = this.initialLoad.bind(this);
     this.loadTasks = this.loadTasks.bind(this);
     this.onRefresh = this.onRefresh.bind(this);
@@ -163,20 +162,6 @@ export default class Tasks extends Component {
   showRefresh = () => {
     this.setState({
       isRefreshing: true,
-    });
-  };
-
-  hideModal = () => {
-    this.setState({
-      visible: false,
-    });
-  };
-
-  showModal = () => {
-    this.setState({
-      title: '',
-      descripiton: '',
-      visible: true,
     });
   };
 
