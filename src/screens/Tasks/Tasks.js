@@ -251,6 +251,8 @@ export default class Tasks extends Component {
 
   showModal = () => {
     this.setState({
+      title: '',
+      descripiton: '',
       visible: true,
     });
   };
