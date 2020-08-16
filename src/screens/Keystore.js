@@ -45,8 +45,6 @@ export default class Tasks extends Component {
     this.editTask = this.editTask.bind(this);
     this.showInfo = this.showInfo.bind(this);
     this.hideInfo = this.hideInfo.bind(this);
-    this.archieve = this.archieve.bind(this);
-    this.complete = this.complete.bind(this);
   }
 
   componentDidMount = () => {
@@ -177,51 +175,6 @@ export default class Tasks extends Component {
     });
   };
 
-  archieve = (id, isCompleted, isArchieved) => {
-    let body = {
-      isCompleted: !!isCompleted,
-      isArchieved: !isArchieved,
-    };
-    return new Promise((resolve, reject) => {
-      editTasks(id, body)
-        .then((json) => {
-          if (json) {
-            resolve(json);
-          }
-        })
-        .catch((err) => {
-          reject();
-        })
-        .finally(() => {
-          this.initialLoad();
-          resolve();
-        });
-    });
-  };
-
-  complete = () => {
-    let body = {
-      isCompleted: !this.state.isCompleted,
-      isArchieved: !!this.state.isArchieved,
-    };
-    return new Promise((resolve, reject) => {
-      editTasks(this.state.editId, body)
-        .then((json) => {
-          if (json) {
-            resolve(json);
-          }
-        })
-        .catch((err) => {
-          reject();
-        })
-        .finally(() => {
-          this.hideInfo();
-          this.initialLoad();
-          resolve();
-        });
-    });
-  };
-
   onRefresh = () => {
     this.initialLoad();
   };
@@ -290,7 +243,6 @@ export default class Tasks extends Component {
         editVisible={true}
         // archieveVisible={true}
         // onSelect={this.onSelect}
-        // archieve={this.archieve}
         // edit={this.edit}
         // delete={this.delete}
       />
@@ -420,7 +372,7 @@ export default class Tasks extends Component {
                 <Paragraph>{this.state.description}</Paragraph>
               </Dialog.Content>
               <Dialog.Actions>
-                <Button color="#1C7CC2" onPress={this.complete}>
+                <Button color="#1C7CC2" >
                   {'Mark as complete'}
                 </Button>
                 <Button color="#1C7CC2" onPress={this.hideInfo}>
