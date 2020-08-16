@@ -21,7 +21,7 @@ class CustomListItem extends Component {
   }
 
   onSelect = () => {
-    this.props.onSelect(this.props.id, this.props.title);
+    this.props.onSelect(this.props.title, this.props.description);
   };
 
   archieve = () => {
