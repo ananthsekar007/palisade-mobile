@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {Text, View, TouchableOpacity, StyleSheet, Clipboard} from 'react-native';
+import Toast from "react-native-simple-toast";
 // import Clipboard from '@react-native-community/clipboard'
 import {List} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -45,7 +46,7 @@ class CustomListItem extends Component {
 
   copyContent = () => {
     Clipboard.setString(this.props.description)
-    
+    Toast.show('Coppied to Clipboard', Toast.LONG)
   }
 
   render() {
