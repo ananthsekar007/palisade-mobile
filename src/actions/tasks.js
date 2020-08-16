@@ -46,3 +46,12 @@ export const getCompletedTasks = async () => {
 
     return get(`${BASE_URL}completedtasks`, header);
 }
+
+export const getArchievedTasks = async () => {
+    let token = await getAuthToken();
+    const header = new Headers();
+    header.append('Content-Type', 'application/json');
+    header.append('Authorization', `Bearer ${token}`);
+
+    return get(`${BASE_URL}archievedtasks`, header);
+}
