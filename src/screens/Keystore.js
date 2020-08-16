@@ -94,13 +94,13 @@ export default class Tasks extends Component {
   addTask = () => {
     let body = {
       title: this.state.title,
-      description: this.state.content,
+      content: this.state.content,
     };
     this.setState({
       loading: true,
     });
     return new Promise((resolve, reject) => {
-      addTasks(body)
+      addKeys(body)
         .then((json) => {
           if (json) {
             resolve(json.data);
