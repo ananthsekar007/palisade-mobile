@@ -43,6 +43,7 @@ export default class Tasks extends Component {
     this.editTask = this.editTask.bind(this);
     this.showInfo = this.showInfo.bind(this);
     this.hideInfo = this.hideInfo.bind(this);
+    this.archieve = this.archieve.bind(this);
   }
 
   componentDidMount = () => {
@@ -170,6 +171,28 @@ export default class Tasks extends Component {
       });
   }
 
+  archieve = (id, isCompleted, isArchieved) => {    
+    let body = {
+        isCompleted: !!isCompleted,
+        isArchieved: !isArchieved
+    }
+    return new Promise((resolve, reject) => {
+        editTasks(id, body)
+          .then((json) => {
+            if (json) {
+              resolve(json);
+            }
+          })
+          .catch(err => {
+              reject();
+          })
+          .finally(() => {
+            this.initialLoad();
+            resolve();
+          });
+      });
+  }
+
   onRefresh = () => {
     this.initialLoad();
   };
@@ -236,6 +259,7 @@ export default class Tasks extends Component {
         editVisible={true}
         archieveVisible={true}
         onSelect={this.onSelect}
+        archieve={this.archieve}
         edit={this.edit}
         delete={this.delete}
       />

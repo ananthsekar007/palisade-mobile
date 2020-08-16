@@ -25,7 +25,7 @@ class CustomListItem extends Component {
   };
 
   archieve = () => {
-    this.props.archieve(this.props.id);
+    this.props.archieve(this.props.id, this.props.isCompleted, this.props.isArchieved);
   };
 
   edit = () => {
@@ -74,7 +74,7 @@ class CustomListItem extends Component {
         <TouchableOpacity
           style={{...styles.iconsContainer, ...this.props.iconsContainerStyle}}>
           {this.props.archieveVisible && (
-            <TouchableOpacity >
+            <TouchableOpacity onPress={this.archieve} >
               <Icon
                 name={'archive'}
                 size={25}
