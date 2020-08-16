@@ -10,7 +10,7 @@ export default class Splash extends Component {
     this.state = {};
   }
 
-   componentDidMount = async () =>  {
+   componentDidMount =() =>  {
     setTimeout(async () => {
         let token = await getAuthToken();
         console.log("token", token);
