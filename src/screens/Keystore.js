@@ -146,7 +146,7 @@ export default class Tasks extends Component {
   editTask = () => {
     let body = {
       title: this.state.title,
-      descripiton: this.state.content,
+      content: this.state.content,
     };
     console.log('body to edit', body);
     this.setState({
@@ -242,7 +242,7 @@ export default class Tasks extends Component {
         deleteVisible={true}
         editVisible={true}
         // onSelect={this.onSelect}
-        // edit={this.edit}
+        edit={this.edit}
         delete={this.delete}
       />
     );
@@ -335,7 +335,7 @@ export default class Tasks extends Component {
             />
 
             <TextInput
-              value={this.state.description}
+              value={this.state.content}
               style={styles.textView}
               theme={{
                 colors: {
