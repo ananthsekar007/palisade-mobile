@@ -4,6 +4,7 @@ import {Text, View, TouchableOpacity, StyleSheet, Clipboard} from 'react-native'
 import Toast from "react-native-simple-toast";
 // import Clipboard from '@react-native-community/clipboard'
 import {List} from 'react-native-paper';
+import { decryptText } from "./../../utilities/EncryptionUtilities";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 /**
@@ -45,7 +46,7 @@ class CustomListItem extends Component {
   };
 
   copyContent = () => {
-    Clipboard.setString(this.props.description)
+    Clipboard.setString(decryptText(this.props.description))
     Toast.show('Copied to Clipboard', Toast.LONG)
   }
 
@@ -69,7 +70,7 @@ class CustomListItem extends Component {
             <Text
               numberOfLines={1}
               style={{...styles.title, ...this.props.titleStyle}}>
-              {this.props.title}
+              {decryptText(this.props.title)}
             </Text>
           </View>
           {this.props.isSubtitle && (
@@ -81,7 +82,7 @@ class CustomListItem extends Component {
               <Text
                 numberOfLines={1}
                 style={{...styles.subtitle, ...this.props.subtitleStyle}}>
-                {this.props.subtitle}
+                {decryptText(this.props.subtitle)}
               </Text>
             </View>
           )}

@@ -12,6 +12,7 @@ import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import CustomConfirmationModal from './../CustomConfirmationModal/CustomConfirmationModal';
 import Logo from './../../../assets/images/palisade.png';
 import AsyncStorage from '@react-native-community/async-storage';
+import Icon from "react-native-vector-icons/MaterialIcons"
 export default class DrawerContent extends Component {
   constructor(props) {
     super(props);

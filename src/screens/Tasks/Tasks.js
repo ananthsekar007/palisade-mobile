@@ -7,6 +7,9 @@ import {
   FlatList,
   RefreshControl,
 } from 'react-native';
+import CryptoJS from 'react-native-crypto-js';
+import {DECRYPT_KEY} from './../../configs/Constants';
+import {decryptText} from './../../utilities/EncryptionUtilities';
 import {Button, TextInput, Paragraph, Dialog, Portal} from 'react-native-paper';
 import CustomModal from './../../components/CustomModal/CustomModal';
 import AppLayout from './../../AppLayout/AppLayout';
@@ -53,6 +56,11 @@ export default class Tasks extends Component {
   }
 
   componentDidMount = () => {
+    let ciphertext = CryptoJS.AES.encrypt('my message', DECRYPT_KEY).toString();
+    console.log(ciphertext);
+    // Decrypt
+    let originalText = decryptText(ciphertext);
+    console.log(originalText);
     this.initialLoad();
     this.props.navigation.addListener('focus', () => {
       this.initialLoad();
@@ -100,8 +108,8 @@ export default class Tasks extends Component {
 
   addTask = () => {
     let body = {
-      title: this.state.title,
-      description: this.state.description,
+      title: CryptoJS.AES.encrypt(this.state.title, DECRYPT_KEY).toString(),
+      description: CryptoJS.AES.encrypt(this.state.description, DECRYPT_KEY).toString(),
     };
     this.setState({
       loading: true,
@@ -144,16 +152,16 @@ export default class Tasks extends Component {
   edit = (id, title, description) => {
     this.showeditModal();
     this.setState({
-      title,
-      description,
+      title: decryptText(title),
+      description: decryptText(description),
       editId: id,
     });
   };
 
   editTask = () => {
     let body = {
-      title: this.state.title,
-      descripiton: this.state.description,
+      title: CryptoJS.AES.encrypt(this.state.title, DECRYPT_KEY).toString(),
+      descripiton: CryptoJS.AES.encrypt(this.state.description, DECRYPT_KEY).toString(),
     };
     console.log('body to edit', body);
     this.setState({
@@ -173,7 +181,7 @@ export default class Tasks extends Component {
           this.setState({
             editloading: false,
             title: '',
-            descripiton: ''
+            descripiton: '',
           });
           this.hideeditModal();
           this.initialLoad();
@@ -372,7 +380,7 @@ export default class Tasks extends Component {
         </CustomModal>
         <CustomModal
           visible={this.state.editVisible}
-          header="Add Task"
+          header="Edit Task"
           hideModal={this.hideeditModal}>
           <View style={styles.inputContainer}>
             <TextInput
