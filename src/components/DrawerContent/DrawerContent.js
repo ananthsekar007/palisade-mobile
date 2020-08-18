@@ -57,7 +57,7 @@ export default class DrawerContent extends Component {
               <View style={{flexDirection: 'row', marginTop: 20}}>
                 <Avatar.Image source={Logo} style={styles.avatar} />
                 <View>
-                  <Text style={styles.title}>Ananth S S</Text>
+                  <Text style={styles.title}>Welcome !</Text>
                 </View>
               </View>
             </View>
