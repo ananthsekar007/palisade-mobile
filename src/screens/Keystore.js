@@ -176,10 +176,6 @@ export default class Tasks extends Component {
     });
   };
 
-  copyContent = () => {
-
-  }
-
   onRefresh = () => {
     this.initialLoad();
   };
