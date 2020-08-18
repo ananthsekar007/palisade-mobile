@@ -10,6 +10,7 @@ import {
 import {Button, TextInput, Paragraph, Dialog, Portal} from 'react-native-paper';
 import CustomModal from './../../components/CustomModal/CustomModal';
 import AppLayout from './../../AppLayout/AppLayout';
+import { decryptText } from "./../../utilities/EncryptionUtilities"
 import CustomListItem from './../../components/CustomListItem/CustomListItem';
 import {
     getArchievedTasks,
@@ -81,8 +82,8 @@ export default class Tasks extends Component {
 
   onSelect = (title, description, id, isCompleted, isArchieved) => {
     this.setState({
-      title,
-      description,
+      title: decryptText(title),
+      description: decryptText(description),
       isArchieved,
       isCompleted,
       editId: id,
