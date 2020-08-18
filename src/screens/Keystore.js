@@ -9,7 +9,10 @@ import {
 } from 'react-native';
 import {Button, TextInput, Paragraph, Dialog, Portal} from 'react-native-paper';
 import CustomModal from './../components/CustomModal/CustomModal';
+import {decryptText} from "./../utilities/EncryptionUtilities"
 import AppLayout from './../AppLayout/AppLayout';
+import { DECRYPT_KEY } from "./../configs/Constants";
+import CryptoJS from "react-native-crypto-js";
 import CustomListItem from './../components/CustomListItem/CustomListItem';
 import {
     addKeys,
@@ -45,7 +48,6 @@ export default class Tasks extends Component {
     this.editTask = this.editTask.bind(this);
     this.showInfo = this.showInfo.bind(this);
     this.hideInfo = this.hideInfo.bind(this);
-    this.copyContent = this.copyContent.bind(this);
   }
 
   componentDidMount = () => {
@@ -85,8 +87,8 @@ export default class Tasks extends Component {
 
   onSelect = (title, description, id, isCompleted, isArchieved) => {
     this.setState({
-      title,
-      content: description,
+      title: decryptText(title),
+      content: decryptText(description),
       editId: id,
     });
     this.showInfo();
@@ -94,9 +96,10 @@ export default class Tasks extends Component {
 
   addTask = () => {
     let body = {
-      title: this.state.title,
-      content: this.state.content,
+      title: CryptoJS.AES.encrypt(this.state.title, DECRYPT_KEY).toString(),
+      content: CryptoJS.AES.encrypt(this.state.content, DECRYPT_KEY).toString(),
     };
+    console.log("keystore payload", body)
     this.setState({
       loading: true,
     });
@@ -138,16 +141,16 @@ export default class Tasks extends Component {
   edit = (id, title, description) => {
     this.showeditModal();
     this.setState({
-      title,
-      content: description,
+      title: decryptText(title),
+      content: decryptText(description),
       editId: id,
     });
   };
 
   editTask = () => {
     let body = {
-      title: this.state.title,
-      content: this.state.content,
+        title: CryptoJS.AES.encrypt(this.state.title, DECRYPT_KEY).toString(),
+        content: CryptoJS.AES.encrypt(this.state.content, DECRYPT_KEY).toString(),
     };
     console.log('body to edit', body);
     this.setState({
@@ -317,7 +320,7 @@ export default class Tasks extends Component {
         </CustomModal>
         <CustomModal
           visible={this.state.editVisible}
-          header="Add Task"
+          header="Edit Task"
           hideModal={this.hideeditModal}>
           <View style={styles.inputContainer}>
             <TextInput
