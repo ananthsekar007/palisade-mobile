@@ -30,3 +30,8 @@ Here are the steps to follow in order to setup the mobile app in your system.
 * Go to `ios/` folder and open in XCode.
 * Click build to run the application.
 
+## Tech Stacks used
+
+* React Native(for mobile app).
+* Crypto JS (for end-to-end encryption).
+* React Native Paper(for UI)
