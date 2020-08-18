@@ -75,6 +75,8 @@ export default class Tasks extends Component {
           } else {
             this.setState({
               keys: [],
+              title: '',
+              content: ''
             });
           }
         })
@@ -212,6 +214,8 @@ export default class Tasks extends Component {
   hideeditModal = () => {
     this.setState({
       editVisible: false,
+      content: '',
+      title: ''
     });
   };
 
@@ -230,6 +234,8 @@ export default class Tasks extends Component {
   hideInfo = () => {
     this.setState({
       infoVisible: false,
+      title: '',
+      content: ''
     });
   };
 
@@ -375,9 +381,6 @@ export default class Tasks extends Component {
                 <Paragraph>{this.state.content}</Paragraph>
               </Dialog.Content>
               <Dialog.Actions>
-                <Button color="#1C7CC2" onPress={this.copyContent}>
-                  {'Copy Content'}
-                </Button>
                 <Button color="#1C7CC2" onPress={this.hideInfo}>
                   {'Cancel'}
                 </Button>

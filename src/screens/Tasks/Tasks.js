@@ -161,7 +161,7 @@ export default class Tasks extends Component {
   editTask = () => {
     let body = {
       title: CryptoJS.AES.encrypt(this.state.title, DECRYPT_KEY).toString(),
-      descripiton: CryptoJS.AES.encrypt(this.state.description, DECRYPT_KEY).toString(),
+      description: CryptoJS.AES.encrypt(this.state.description, DECRYPT_KEY).toString(),
     };
     console.log('body to edit', body);
     this.setState({
@@ -181,7 +181,7 @@ export default class Tasks extends Component {
           this.setState({
             editloading: false,
             title: '',
-            descripiton: '',
+            description: '',
           });
           this.hideeditModal();
           this.initialLoad();
@@ -260,7 +260,7 @@ export default class Tasks extends Component {
   showModal = () => {
     this.setState({
       title: '',
-      descripiton: '',
+      description: '',
       visible: true,
     });
   };
@@ -268,6 +268,8 @@ export default class Tasks extends Component {
   hideeditModal = () => {
     this.setState({
       editVisible: false,
+      title: '',
+      description: ''
     });
   };
 
